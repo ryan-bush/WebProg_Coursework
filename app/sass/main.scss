@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Varela&display=swap');
+
+body {
+  font-family: 'Varela', sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  body {
+    background-color: lightcoral;
+  }
+}
