@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Varela&display=swap');
 
+@import "variables";
+@import "layout/nav";
+@import "layout/button";
+@import "layout/forms";
+
 body {
   font-family: 'Varela', sans-serif;
   padding: 2em 1em;
@@ -7,73 +12,4 @@ body {
 
 h1 {
   text-align: center;
-}
-
-.mainNav {
-  width: 99%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-
-.mainNav h3 {
-  position: absolute;
-  left: -999em;
-  clear: left;
-  margin: 0 0 2em;
-}
-.mainNav ul {
-  padding-left: 0;
-  display: inline-block;
-  border: 1px solid #e6e6e6;
-  list-style-type: none;
-  float: left;
-}
-.mainNav li {
-  font-size: 1.8em;
-  float: left;
-  border-bottom: 1px solid #eee;
-}
-.mainNav li:last-child {
-  border-bottom: 0;
-}
-.mainNav a {
-  display: block;
-  padding: .5em .8em;
-  text-decoration: none;
-  color: #333;
-}
-.mainNav a:hover {
-  background-color: #f8f8f8;
-}
-.mainNav .mainNavCurrent {
-  font-weight: bold;
-}
-
-@media screen and (max-width: 910px) {
-  .mainNav {
-    float: right;
-    clear: none;
-  }
-  .mainNav li {
-    float: left;
-    font-size: 1.2em;
-    border-bottom: 0;
-  }
-
-}
-
-@media screen and (max-width: 693px) {
-  .mainNav,
-  //.mainNav ul {
-  //  float: left;
-  //}
-  //.mainNav ul {
-  //  float: left;
-  //}
-  .mainNav li {
-    float:  none;
-    font-size: 1.2em;
-    border-bottom: 0;
-  }
 }

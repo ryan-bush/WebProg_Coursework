@@ -1,13 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans|Varela&display=swap");
-body {
-  font-family: "Varela", sans-serif;
-  padding: 2em 1em;
-}
-
-h1 {
-  text-align: center;
-}
-
 .mainNav {
   width: 99%;
   text-align: center;
@@ -34,10 +25,6 @@ h1 {
   font-size: 1.8em;
   float: left;
   border-bottom: 1px solid #eee;
-}
-
-.mainNav li:last-child {
-  border-bottom: 0;
 }
 
 .mainNav a {
@@ -74,6 +61,83 @@ h1 {
     font-size: 1.2em;
     border-bottom: 0;
   }
+
+  .mainNav li:last-child {
+    border-bottom: 0;
+  }
+}
+.buttonPrimary {
+  display: inline-block;
+  border: none;
+  padding: 15px 10px;
+  text-decoration: none;
+  background: #4f54f9;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+}
+
+.buttonPrimary:hover, .buttonPrimary:focus {
+  background: #4549b4;
+}
+
+.buttonPrimary:focus {
+  outline: 1px solid #ffffff;
+  outline-offset: -4px;
+}
+
+.buttonPrimary:active {
+  transform: scale(0.99);
+}
+
+.buttonSecondary {
+  display: inline-block;
+  border: none;
+  padding: 15px 10px;
+  text-decoration: none;
+  background: #4CBB17;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+}
+
+.buttonSecondary:hover, .buttonSecondary:focus {
+  background: #4c9a17;
+}
+
+.buttonSecondary:focus {
+  outline: 1px solid #ffffff;
+  outline-offset: -4px;
+}
+
+.buttonSecondary:active {
+  transform: scale(0.99);
+}
+
+input {
+  display: inline-block;
+  width: 75%;
+  padding: 0.75rem 1.5rem;
+  height: auto;
+  border-radius: 2rem;
+  border: 1px solid #ced4da;
+}
+
+body {
+  font-family: "Varela", sans-serif;
+  padding: 2em 1em;
+}
+
+h1 {
+  text-align: center;
 }
 
 /*# sourceMappingURL=main.css.map */

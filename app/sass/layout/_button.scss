@@ -1,0 +1,55 @@
+.buttonPrimary {
+  display: inline-block;
+  border: none;
+  padding: 15px 10px;
+  text-decoration: none;
+  background: $buttonPrimary;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+}
+
+.buttonPrimary:hover, .buttonPrimary:focus {
+  background: $buttonPrimaryHover;
+}
+
+.buttonPrimary:focus {
+  outline: 1px solid $white;
+  outline-offset: -4px;
+}
+
+.buttonPrimary:active {
+  transform: scale(0.99);
+}
+
+.buttonSecondary {
+  display: inline-block;
+  border: none;
+  padding: 15px 10px;
+  text-decoration: none;
+  background: $buttonSecondary;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+}
+
+.buttonSecondary:hover, .buttonSecondary:focus {
+  background: $buttonSecondaryHover;
+}
+
+.buttonSecondary:focus {
+  outline: 1px solid $white;
+  outline-offset: -4px;
+}
+
+.buttonSecondary:active {
+  transform: scale(0.99);
+}
