@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Questionnaire Maker</title>
-<!--    <link rel="stylesheet" href="css/main.css">-->
+    <!--    <link rel="stylesheet" href="css/main.css">-->
 </head>
 <body>
 <!--<nav class="mainNav">-->
@@ -16,14 +16,10 @@
 <!--        <li><a href="#">Nav Link 5</a></li>-->
 <!--    </ul>-->
 <!--</nav>-->
-<div id="questions">
-
-</div>
-<div id="addButtons">
-    <a href="#" class="buttonPrimary" onclick="addTextQuestion()">Add Text</a>
-    <a href="#" class="buttonPrimary" onclick="addSelectQuestion()">Add Select</a>
-    <a href="#" class="buttonPrimary">Add Radio</a>
-    <a href="#" class="buttonPrimary">Add Slider</a>
+<div id="uploadJSON">
+    <label for="upJSON">Upload JSON:</label>
+    <input id="upJSON" name="upJSON">
+    <button onclick="uploadJSON()">Upload</button>
 </div>
 
 
