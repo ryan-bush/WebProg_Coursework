@@ -16,22 +16,15 @@
 <!--        <li><a href="#">Nav Link 5</a></li>-->
 <!--    </ul>-->
 <!--</nav>-->
-<div id="uploadJSON">
-    <label for="upJSON">Upload JSON:</label>
-    <input type="file" id="upJSON" value="Import" /><br />
-    <button id="import">Import</button>
-    <textarea id="result">
+<h2>Answer Survey</h2>
+<form action="#" id="answerSurvey" method="post" name="answerSurvey">
+    <span id="survey"></span>
+    <p></p>
+    <input id="submit" type="submit" value="Submit">
+</form>
+<div id="results">
 
-    </textarea>
 </div>
-
-<div id="form">
-    <form id="jsonForm">
-
-    </form>
-</div>
-
-<script src="js/index.js"></script>
-<script src="js/uploadJSON.js"></script>
+<script src="js/displaySurvey.js"></script>
 </body>
 </html>
