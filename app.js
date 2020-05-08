@@ -58,6 +58,8 @@ let surveys = [
      },
 ];
 
+
+
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -66,18 +68,30 @@ app.use(
 );
 app.use(express.static('app', { extensions: ['html']}));
 
-app.get('/new', function (req, res) {
-    res.send('Hello World!')
-});
+async function getSurveys(req, res) {
+    res.json(await db.listSurveys());
+}
 
-app.get('/surveys/:id', (req, res) => {
-    for (const survey of surveys) {
-        if (survey.id === req.params.id) {
-            res.json(survey);
-            return; // short
-        }
+async function getSurvey(req, res) {
+    const result = await db.findSurvey(req.params.id);
+    if (!result) {
+        res.status(404).send('No match for that ID.');
+        return;
     }
-    res.status(404).send('No match for that ID.');
-});
+    res.json(result);
+}
+
+// wrap async function for express.js error handling
+function asyncWrap(f) {
+    return (req, res, next) => {
+        Promise.resolve(f(req, res, next))
+            .catch((e) => next(e || new Error()));
+    };
+}
+
+app.get('/surveys', asyncWrap(getSurveys));
+app.get('/surveys/:id', asyncWrap(getSurvey));
+// app.put('/surveys/:id', express.json(), asyncWrap(putMessage));
+// app.post('/surveys', uploader.single('avatar'), express.json(), asyncWrap(postMessage));
 
 app.listen(port);
