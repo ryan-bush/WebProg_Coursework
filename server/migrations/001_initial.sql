@@ -1,8 +1,7 @@
 -- Up
 
 CREATE TABLE Surveys (
-  id   CHAR(36) PRIMARY KEY,
-  uuid  VARCHAR(128) NOT NULL,
+  id   CHAR(128) PRIMARY KEY,
   json TEXT(66555),
   time DATETIME
 );

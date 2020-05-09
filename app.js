@@ -81,6 +81,16 @@ async function getSurvey(req, res) {
     res.json(result);
 }
 
+async function postSurvey(req, res) {
+    const survey = await db.addSurvey(req.body);
+    res.json(JSON.stringify(survey));
+}
+
+async function postResult(req, res) {
+    const result = await db.addResult(req.body, req.params.id);
+    res.json(JSON.stringify(result));
+}
+
 // wrap async function for express.js error handling
 function asyncWrap(f) {
     return (req, res, next) => {
@@ -92,6 +102,7 @@ function asyncWrap(f) {
 app.get('/surveys', asyncWrap(getSurveys));
 app.get('/surveys/:id', asyncWrap(getSurvey));
 // app.put('/surveys/:id', express.json(), asyncWrap(putMessage));
-// app.post('/surveys', uploader.single('avatar'), express.json(), asyncWrap(postMessage));
+app.post('/surveys', express.json(), asyncWrap(postSurvey));
+app.post('/results/:id', express.json(), asyncWrap(postResult));
 
 app.listen(port);

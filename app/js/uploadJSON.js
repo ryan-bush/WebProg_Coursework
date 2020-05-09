@@ -95,21 +95,13 @@ function createFormatted(json) {
         }
 
         a.appendChild(q);
-
-        // let a = document.createElement('p');
-        // let aA = document.createTextNode(obj.questions[i].id);
-        // a.appendChild(aA);
-        // let aB = document.createTextNode(obj.questions[i].text);
-        // a.appendChild(aB);
-        // let aC = document.createTextNode(obj.questions[i].type);
-        // a.appendChild(aC);
-        // if(obj.questions[i].type === "multi-select") {
-        //     let aD = document.createTextNode(obj.questions[i].options);
-        //     a.appendChild(aD);
-        // }
-        // title.appendChild(a);
     }
-
+    let submitButton = document.createElement('button');
+    submitButton.id = 'submitSurvey';
+    let submitButtonText = document.createTextNode('Create Survey');
+    document.getElementById("form").appendChild(submitButton);
+    submitButton.appendChild(submitButtonText);
+    submitButton.addEventListener('click', submitButtonClick);
     document.getElementById("jsonForm").appendChild(a);
 }
 
@@ -143,23 +135,50 @@ function getSurveyId() {
     return window.location.hash.substring(1);
 }
 
-/** Use fetch to put a JSON message to the server */
-async function sendSurvey() {
-    const id = getSurveyId();
-    const payload = { id, msg: el.message.value };
-    console.log('Payload', payload);
+function submitButtonClick() {
+    sendSurvey();
+}
 
-    const response = await fetch(`surveys/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+/** Use fetch to post a JSON message to the server */
+async function sendSurvey() {
+    const response = await fetch('surveys', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj),
     });
 
     if (response.ok) {
-        el.message.value = '';
-        const updatedMessages = await response.json();
-        showSurvey(updatedMessages, el.messagelist);
+        const id = await response.json();
+        console.log(id);
+        createShareLink(id);
     } else {
         console.log('failed to send message', response);
     }
+}
+
+function createShareLink(id) {
+    console.log(id);
+    let a = document.createElement('div');
+    // Show Share Title
+    let aTitle = document.createElement('h2');
+    let aTitleText = document.createTextNode("Share Link");
+    a.appendChild(aTitle);
+    aTitle.appendChild(aTitleText);
+
+    let b = document.createElement('input');
+    b.type = 'text';
+    b.name = 'share';
+    b.id = 'share';
+    b.value = "localhost:8080/survey#" + JSON.parse(id);
+    a.appendChild(b);
+
+    let v = document.createElement('a');
+    v.id = 'viewSurvey';
+    v.href = "http://localhost:8080/survey#" + JSON.parse(id);
+    let vT = document.createTextNode('View Survey');
+    a.appendChild(v);
+    v.appendChild(vT);
+    document.getElementById("share").appendChild(a);
 }
