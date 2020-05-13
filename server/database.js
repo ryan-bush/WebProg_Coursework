@@ -39,6 +39,19 @@ async function addResult(res, id) {
     return time;
 }
 
+async function getResults(id) {
+    const db = await dbConn;
+    let res = {};
+    res = db.all('SELECT * FROM Responses WHERE surveyID = ?', id);
+    return res;
+}
+
+async function getName(id) {
+    const db = await dbConn;
+    let name = db.all('SELECT json FROM Surveys WHERE id = ?', id);
+    return name;
+}
+
 function currentTime() {
     return new Date().toISOString();
 }
@@ -48,4 +61,6 @@ module.exports = {
     findSurvey,
     addSurvey,
     addResult,
+    getResults,
+    getName,
 };

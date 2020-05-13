@@ -5,6 +5,7 @@ const path = require('path');
 const viewFolder = "/app/";
 const port = 8080;
 const db = require('./server/database');
+const FileSaver = require('file-saver');
 
 let surveys = [
     {
@@ -91,6 +92,25 @@ async function postResult(req, res) {
     res.json(JSON.stringify(result));
 }
 
+async function getResult(req, res) {
+    const result = await db.getResults(req.params.id);
+    if (!result) {
+        res.status(404).send('No results for that ID');
+    }
+    res.json(result);
+}
+
+async function getName(req, res) {
+    const result = await db.getName(req.params.id);
+    if (!result) {
+        res.status(404).send('No name for that ID')
+    }
+
+    let a = result[0].json;
+    a = JSON.parse(a);
+    res.json(a.name);
+}
+
 // wrap async function for express.js error handling
 function asyncWrap(f) {
     return (req, res, next) => {
@@ -104,5 +124,7 @@ app.get('/surveys/:id', asyncWrap(getSurvey));
 // app.put('/surveys/:id', express.json(), asyncWrap(putMessage));
 app.post('/surveys', express.json(), asyncWrap(postSurvey));
 app.post('/results/:id', express.json(), asyncWrap(postResult));
+app.get('/results/:id', express.json(), asyncWrap(getResult));
+app.get('/name/:id', express.json(), asyncWrap(getName));
 
 app.listen(port);
