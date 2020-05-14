@@ -1,6 +1,8 @@
 let obj = {};
 let responses = [];
 let sortedResponses = {};
+let chartColours = ['#ff6385', '#36a3eb', '#ffcf56', '#4bc0c0', '#ff4040', '#ffa940', '#5040ff', '#40ff63',
+    '#9966ff', '#ffa040', '#ff40a3', '#4063ff', '#dfff40'];
 const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
@@ -16,7 +18,70 @@ function showResults(res, resName) {
     mergeResults(obj);
     orderResults(responses);
     createDownloadLink();
-    drawCharts();
+    showResponses();
+}
+function showResponses() {
+    console.log(sortedResponses);
+    for (let i in sortedResponses) {
+        let a = occurrencesInArray(sortedResponses[i])
+
+        let t = document.createElement('h3');
+        let tT = document.createTextNode(capitalize(i));
+        t.appendChild(tT);
+
+        let table = document.createElement('table');
+        let tR = document.createElement('tr');
+        let tH1 = document.createElement('th');
+        let tH2 = document.createElement('th');
+        let tH11 = document.createTextNode('Response');
+        let tH21 = document.createTextNode('Total');
+
+        table.appendChild(tR);
+        tR.appendChild(tH1);
+        tR.appendChild(tH2);
+        tH1.appendChild(tH11);
+        tH2.appendChild(tH21);
+
+        for (j in a[0]) {
+            let tRow = document.createElement('tr');
+            let tD1 = document.createElement('td');
+            let tD2 = document.createElement('td');
+            let tD11 = document.createTextNode(a[0][j]);
+            let tD21 = document.createTextNode(a[1][j]);
+            table.appendChild(tRow);
+            tRow.appendChild(tD1);
+            tRow.appendChild(tD2);
+            tD1.appendChild(tD11);
+            tD2.appendChild(tD21);
+        }
+
+        document.getElementById("results").appendChild(t);
+        document.getElementById("results").appendChild(table);
+
+        let x = document.createElement('canvas');
+        x.id = 'chartResponse' + i;
+
+        document.getElementById("results").appendChild(x);
+        // Create Chart
+        let myChart = new Chart(x, {
+            type: 'pie',
+            data: {
+                labels: a[0],
+                datasets: [{
+                    label: '# of Votes',
+                    data: a[1],
+                    backgroundColor: chartColours,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Responses for ' + capitalize(i)
+                },
+            }
+        });
+    }
 }
 
 function createDownloadLink() {
@@ -34,48 +99,7 @@ function createDownloadLink() {
 function drawCharts() {
     for(let i in sortedResponses) {
         // Create Chart Canvas
-        let x = document.createElement('canvas');
-        x.id = 'chartResponse' + i;
 
-        let y = document.getElementById('charts');
-        y.appendChild(x);
-
-        let a = occurrencesInArray(sortedResponses[i])
-        console.log(i);
-        // Create Chart
-        let myChart = new Chart(x, {
-            type: 'pie',
-            data: {
-                labels: a[0],
-                datasets: [{
-                    label: '# of Votes',
-                    data: a[1],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Responses for ' + capitalize(i)
-                },
-            }
-        });
     }
 }
 
@@ -104,11 +128,6 @@ function orderResults(res) {
         } else {
             sortedResponses[res[i].name].push(res[i].value);
         }
-        // Display on Page
-        let a = document.createElement('p');
-        let aA = document.createTextNode(sortedResponses[res[i].name]);
-        a.appendChild(aA);
-        document.getElementById("results").appendChild(a);
     }
 }
 
