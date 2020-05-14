@@ -21,8 +21,12 @@ function showResults(res, resName) {
     showResponses();
 }
 function showResponses() {
-    console.log(sortedResponses);
     for (let i in sortedResponses) {
+        let d = document.createElement('div');
+        d.id = 'responses' + i;
+        document.getElementById("results").appendChild(d);
+
+
         let a = occurrencesInArray(sortedResponses[i])
 
         let t = document.createElement('h3');
@@ -55,13 +59,47 @@ function showResponses() {
             tD2.appendChild(tD21);
         }
 
-        document.getElementById("results").appendChild(t);
-        document.getElementById("results").appendChild(table);
+        d.appendChild(t);
+        d.appendChild(table);
+
+        let chartButtons = document.createElement('div');
+        chartButtons.id = "chartButtons";
+        // Bar Chart
+        let chartButtonBar = document.createElement('button');
+        let chartButtonBarText = document.createTextNode('Bar Chart');
+        chartButtonBar.id = 'chartButtonBar';
+        chartButtons.appendChild(chartButtonBar);
+        chartButtonBar.appendChild(chartButtonBarText);
+        // Horizontal Bar Chart
+        let chartButtonHorBar = document.createElement('button');
+        let chartButtonHorBarText = document.createTextNode('Horizontal Bar Chart');
+        chartButtonHorBar.id = 'chartButtonHorBar';
+        chartButtons.appendChild(chartButtonHorBar);
+        chartButtonHorBar.appendChild(chartButtonHorBarText);
+        // Pie Chart
+        let chartButtonPie = document.createElement('button');
+        let chartButtonPieText = document.createTextNode('Pie Chart');
+        chartButtonPie.id  = 'chartButtonPie';
+        chartButtons.appendChild(chartButtonPie);
+        chartButtonPie.appendChild(chartButtonPieText);
+        // Pie Chart
+        let chartButtonDonut = document.createElement('button');
+        let chartButtonDonutText = document.createTextNode('Donut Chart');
+        chartButtonDonut.id  = 'chartButtonDonut';
+        chartButtons.appendChild(chartButtonDonut);
+        chartButtonDonut.appendChild(chartButtonDonutText);
+
+        d.appendChild(chartButtons);
+
+        chartButtonBar.addEventListener("click", function(){ showBarChart(i, a[0], a[1]); });
+        chartButtonHorBar.addEventListener("click", function(){ showHorizontalBarChart(i, a[0], a[1]); });
+        chartButtonPie.addEventListener("click", function(){ showPieChart(i, a[0], a[1]); });
+        chartButtonDonut.addEventListener("click", function(){ showDonutChart(i, a[0], a[1]); });
 
         let x = document.createElement('canvas');
         x.id = 'chartResponse' + i;
 
-        document.getElementById("results").appendChild(x);
+        d.appendChild(x);
         // Create Chart
         let myChart = new Chart(x, {
             type: 'pie',
@@ -82,6 +120,134 @@ function showResponses() {
             }
         });
     }
+}
+
+function showBarChart(i, a, b) {
+    let response = document.getElementById('responses' + i);
+    let chart = document.getElementById('chartResponse' + i);
+    chart.parentNode.removeChild(chart);
+
+    let x = document.createElement('canvas');
+    x.id = 'chartResponse' + i;
+    response.appendChild(x);
+    let myChart = new Chart(x, {
+        type: 'bar',
+        data: {
+            labels: a,
+            datasets: [{
+                label: '# of Responses',
+                data: b,
+                backgroundColor: chartColours,
+                borderWidth: 1,
+                scaleStartValue: 0
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Responses for ' + capitalize(i)
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
+function showHorizontalBarChart(i, a, b) {
+    let response = document.getElementById('responses' + i);
+    let chart = document.getElementById('chartResponse' + i);
+    chart.parentNode.removeChild(chart);
+
+    let x = document.createElement('canvas');
+    x.id = 'chartResponse' + i;
+    response.appendChild(x);
+    let myChart = new Chart(x, {
+        type: 'horizontalBar',
+        data: {
+            labels: a,
+            datasets: [{
+                label: '# of Responses',
+                data: b,
+                backgroundColor: chartColours,
+                borderWidth: 1,
+                scaleStartValue: 0
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Responses for ' + capitalize(i)
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
+function showPieChart(i, a, b) {
+    let response = document.getElementById('responses' + i);
+    let chart = document.getElementById('chartResponse' + i);
+    chart.parentNode.removeChild(chart);
+
+    let x = document.createElement('canvas');
+    x.id = 'chartResponse' + i;
+    response.appendChild(x);
+    let myChart = new Chart(x, {
+        type: 'pie',
+        data: {
+            labels: a,
+            datasets: [{
+                label: '# of Responses',
+                data: b,
+                backgroundColor: chartColours,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Responses for ' + capitalize(i)
+            },
+        }
+    });
+}
+
+function showDonutChart(i, a, b) {
+    let response = document.getElementById('responses' + i);
+    let chart = document.getElementById('chartResponse' + i);
+    chart.parentNode.removeChild(chart);
+
+    let x = document.createElement('canvas');
+    x.id = 'chartResponse' + i;
+    response.appendChild(x);
+    let myChart = new Chart(x, {
+        type: 'doughnut',
+        data: {
+            labels: a,
+            datasets: [{
+                label: '# of Responses',
+                data: b,
+                backgroundColor: chartColours,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Responses for ' + capitalize(i)
+            },
+        }
+    });
 }
 
 function createDownloadLink() {
