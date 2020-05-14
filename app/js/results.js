@@ -1,6 +1,10 @@
 let obj = {};
 let responses = [];
 let sortedResponses = {};
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 function getSurveyId() {
     return window.location.hash.substring(1);
@@ -15,38 +19,8 @@ function showResults(res, resName) {
     drawCharts();
 }
 
-function saveJSON(data, filename){
-
-    if(!data) {
-        console.error('No data')
-        return;
-    }
-
-    if(!filename) filename = 'console.json'
-
-    if(typeof data === "object"){
-        data = JSON.stringify(data, undefined, 4)
-    }
-
-    var blob = new Blob([data], {type: 'text/json'}),
-        e    = document.createEvent('MouseEvents'),
-        a    = document.createElement('a')
-
-    a.download = filename
-    a.href = window.URL.createObjectURL(blob)
-    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
-    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-    a.dispatchEvent(e)
-}
-
 function createDownloadLink() {
-    console.log(sortedResponses);
-    console.log( JSON.stringify(sortedResponses));
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sortedResponses,null,2));
-    //saveJSON(sortedResponses, "saved_data.json");
-
-    //let file = new File(sortedResponses, "responses.json", {type: "text/json;charset=utf-8"});
-    //FileSaver.saveAs(file);
 
     let a = document.createElement('a');
     a.href = 'data:' + data;
@@ -62,13 +36,12 @@ function drawCharts() {
         // Create Chart Canvas
         let x = document.createElement('canvas');
         x.id = 'chartResponse' + i;
-        x.width = 200;
-        x.height = 200;
+
         let y = document.getElementById('charts');
         y.appendChild(x);
 
         let a = occurrencesInArray(sortedResponses[i])
-        console.log(sortedResponses.name);
+        console.log(i);
         // Create Chart
         let myChart = new Chart(x, {
             type: 'pie',
@@ -99,7 +72,7 @@ function drawCharts() {
             options: {
                 title: {
                     display: true,
-                    text: 'Custom Chart Title'
+                    text: 'Responses for ' + capitalize(i)
                 },
             }
         });
@@ -148,8 +121,10 @@ function mergeResults(res) {
     }
     // Display on Page
     let a = document.createElement('p');
-    let aA = document.createTextNode(JSON.stringify(responses));
-    a.appendChild(aA);
+    // let aA = document.createTextNode(JSON.stringify(responses));
+    // a.appendChild(aA);
+    let r = document.createTextNode('Total Responses: ' + res.length);
+    a.appendChild(r);
     document.getElementById("results").appendChild(a);
     responses = JSON.stringify(responses);
 }

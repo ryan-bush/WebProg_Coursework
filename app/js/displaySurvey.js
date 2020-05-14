@@ -119,8 +119,26 @@ function submitButtonClick() {
     let data = JSON.stringify($('form').serializeArray());
     $('#results').text(JSON.stringify($('form').serializeArray()));
     sendResult(data);
+    showResultsPage();
 }
 
+function showResultsPage() {
+    let id = getSurveyId();
+    let a = document.createElement('div');
+    // Show Share Title
+    let aTitle = document.createElement('h2');
+    let aTitleText = document.createTextNode("View Results");
+    a.appendChild(aTitle);
+    aTitle.appendChild(aTitleText);
+
+    let v = document.createElement('a');
+    v.id = 'viewResults';
+    v.href = "http://localhost:8080/results#" + id;
+    let vT = document.createTextNode('View Results');
+    a.appendChild(v);
+    v.appendChild(vT);
+    document.getElementById("results").appendChild(a);
+}
 
 /** Use fetch to post a JSON message to the server */
 async function sendResult(data) {
