@@ -19,21 +19,23 @@
 <div id="addFormFields">
     <a href="#" class="buttonPrimary" onclick="addTextQuestion()">Add Text</a>
     <a href="#" class="buttonPrimary" onclick="addNumberQuestion()">Add Number</a>
-    <a href="#" class="buttonPrimary" onclick="addTextAreaQuestion()">Add Large Text</a>
-    <a href="#" class="buttonPrimary" onclick="addSelectQuestion()">Add Select</a>
-    <a href="#" class="buttonPrimary">Add Radio</a>
-    <a href="#" class="buttonPrimary">Add Slider</a>
+    <a href="#" class="buttonPrimary" onclick="addSingleSelectQuestion()">Add Single Select</a>
+    <a href="#" class="buttonPrimary" onclick="addMultiSelectQuestion()">Add Multi Select</a>
     <a onclick="resetElements()">Reset</a>
 
 </div>
 <h2>The Survey</h2>
-<form action="#" id="createSurveyForm" method="get" name="createSurveyForm">
-    <span id="myForm"></span>
-    <p></p><input type="submit" value="Submit">
-</form>
+<input type="text" placeholder="name" id="surveyName">
+<div id="survey">
+
+</div>
+<input id="submitButton" type="submit" value="Submit">
 <div id="results">
 
 </div>
-<script src="js/index.js"></script>
+<div id="links">
+
+</div>
+<script src="js/newSurvey.js"></script>
 </body>
 </html>

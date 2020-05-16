@@ -98,7 +98,6 @@ function showResponses() {
 
         let x = document.createElement('canvas');
         x.id = 'chartResponse' + i;
-
         d.appendChild(x);
         // Create Chart
         let myChart = new Chart(x, {
