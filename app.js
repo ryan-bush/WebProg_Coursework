@@ -82,6 +82,11 @@ async function getSurvey(req, res) {
     res.json(result);
 }
 
+async function getAllSurveys(req, res) {
+    const result = await db.listSurveys();
+    res.json(JSON.stringify(result));
+}
+
 async function postSurvey(req, res) {
     const survey = await db.addSurvey(req.body);
     res.json(JSON.stringify(survey));
@@ -120,6 +125,7 @@ function asyncWrap(f) {
 }
 
 app.get('/surveys', asyncWrap(getSurveys));
+app.get('/listSurveys', asyncWrap(getAllSurveys));
 app.get('/surveys/:id', asyncWrap(getSurvey));
 // app.put('/surveys/:id', express.json(), asyncWrap(putMessage));
 app.post('/surveys', express.json(), asyncWrap(postSurvey));

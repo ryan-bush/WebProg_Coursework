@@ -341,17 +341,28 @@ async function loadResults() {
     } else {
         res = { msg: 'failed to load results :-(' };
     }
-    // Fetch Survey Name
-    const responseName = await fetch(`name/${id}`);
-    let resName;
-    if (responseName.ok) {
-        resName = await responseName.json();
+    if(res.length === 0) {
+        showNoResponses();
     } else {
-        resName = { msg: 'failed to load name :-(' };
+        // Fetch Survey Name
+        const responseName = await fetch(`name/${id}`);
+        let resName;
+        if (responseName.ok) {
+            resName = await responseName.json();
+        } else {
+            resName = { msg: 'failed to load name :-(' };
+        }
+        showResults(res, resName);
     }
-    showResults(res, resName);
 }
 
+function showNoResponses() {
+    let heading = document.createElement('h2');
+    let headingText = document.createTextNode("This survey has no responses");
+    heading.appendChild(headingText);
+
+    document.getElementById("title").appendChild(heading);
+}
 
 function pageLoaded() {
     loadResults();
