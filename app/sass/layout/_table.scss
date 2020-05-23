@@ -1,10 +1,12 @@
-#surveys {
-  width: 100%;
+.surveyTable {
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  padding: 33px 30px;
+
   table {
-    border-spacing: 1px;
+    border-spacing: 1;
     border-collapse: collapse;
     background: white;
     border-radius: 10px;
@@ -13,46 +15,158 @@
     margin: 0 auto;
     position: relative;
   }
-
-  table td {
-    padding-left: 8px;
-    text-align: left;
+  table * {
+    position: relative;
   }
-
-  table th {
+  table td, table th {
     padding-left: 8px;
+
+  }
+  table thead tr {
     height: 60px;
     background: #36304a;
-    text-align: left;
+    color: white;
   }
-  table tr {
+  table tbody tr {
     height: 50px;
   }
-  table tr:last-child {
+  table tbody tr:last-child {
     border: 0;
   }
+  table td, table th {
+    text-align: left;
+  }
+  table td.l, table th.l {
+    text-align: right;
+  }
+  table td.c, table th.c {
+    text-align: center;
+  }
+  table td.r, table th.r {
+    text-align: center;
+  }
 
-  th{
+
+  .tableHead th{
     font-size: 18px;
     color: #fff;
     line-height: 1.2;
     font-weight: unset;
   }
 
-  tr:nth-child(even) {
+  tbody tr:nth-child(even) {
     background-color: #f5f5f5;
   }
 
-  tr {
+  tbody tr {
     font-size: 15px;
     color: #808080;
     line-height: 1.2;
-    //font-weight: unset;
+    font-weight: unset;
   }
 
-  tr:hover {
+  tbody tr:hover {
     color: #555555;
     background-color: #f5f5f5;
+    cursor: pointer;
+  }
+
+  .tableColumn1 {
+    width: 260px;
+    padding-left: 40px;
+  }
+
+  .tableColumn2 {
+    width: 160px;
+  }
+
+  .tableColumn3 {
+    width: 245px;
+  }
+
+  .tableColumn4 {
+    width: 110px;
+    text-align: right;
+  }
+
+  .tableColumn5 {
+    width: 170px;
+    text-align: right;
+  }
+
+
+  @media screen and (max-width: 992px) {
+    table {
+      display: block;
+    }
+    table > *, table tr, table td, table th {
+      display: block;
+    }
+    table thead {
+      display: none;
+    }
+    table tbody tr {
+      height: auto;
+      padding: 37px 0;
+    }
+    table tbody tr td {
+      padding-left: 40% !important;
+      margin-bottom: 24px;
+    }
+    table tbody tr td:last-child {
+      margin-bottom: 0;
+    }
+    table tbody tr td:before {
+      font-size: 14px;
+      color: #999999;
+      line-height: 1.2;
+      font-weight: unset;
+      position: absolute;
+      width: 40%;
+      left: 30px;
+      top: 0;
+    }
+    table tbody tr td:nth-child(1):before {
+      content: "ID";
+    }
+    table tbody tr td:nth-child(2):before {
+      content: "Name";
+    }
+    table tbody tr td:nth-child(3):before {
+      content: "Link";
+    }
+    table tbody tr td:nth-child(4):before {
+      content: "Responses";
+    }
+    table tbody tr td:nth-child(5):before {
+      content: "Date";
+    }
+
+    .tableColumn4,
+    .tableColumn5,
+    .tableColumn6 {
+      text-align: left;
+    }
+
+    .tableColumn4,
+    .tableColumn5,
+    .tableColumn6,
+    .tableColumn1,
+    .tableColumn2,
+    .tableColumn3 {
+      width: 100%;
+    }
+
+    tbody tr {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .surveyTable {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
   }
 }
 

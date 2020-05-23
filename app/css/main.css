@@ -1,69 +1,53 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans|Varela&display=swap");
 .mainNav {
-  width: 99%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-
-.mainNav h3 {
-  position: absolute;
-  left: -999em;
-  clear: left;
-  margin: 0 0 2em;
-}
-
-.mainNav ul {
-  padding-left: 0;
-  display: inline-block;
-  border: 1px solid #e6e6e6;
-  list-style-type: none;
-  float: left;
-}
-
-.mainNav li {
-  font-size: 1.8em;
-  float: left;
-  border-bottom: 1px solid #eee;
+  overflow: hidden;
+  background-color: #36304a;
 }
 
 .mainNav a {
+  float: left;
   display: block;
-  padding: 0.5em 0.8em;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 24px 26px;
   text-decoration: none;
-  color: #333;
+  font-size: 20px;
 }
 
 .mainNav a:hover {
-  background-color: #f8f8f8;
+  background-color: #ddd;
+  color: black;
 }
 
-.mainNav .mainNavCurrent {
-  font-weight: bold;
+.mainNav .icon {
+  display: none;
 }
 
-@media screen and (max-width: 910px) {
-  .mainNav {
+@media screen and (max-width: 600px) {
+  .mainNav a:not(:first-child) {
+    display: none;
+  }
+
+  .mainNav a.icon {
     float: right;
-    clear: none;
-  }
-
-  .mainNav li {
-    float: left;
-    font-size: 1.2em;
-    border-bottom: 0;
+    display: block;
   }
 }
-@media screen and (max-width: 693px) {
-  .mainNav,
-.mainNav li {
-    float: none;
-    font-size: 1.2em;
-    border-bottom: 0;
+@media screen and (max-width: 600px) {
+  .mainNav.responsive {
+    position: relative;
   }
 
-  .mainNav li:last-child {
-    border-bottom: 0;
+  .mainNav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .mainNav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
   }
 }
 .buttonPrimary {
@@ -131,14 +115,15 @@ input {
   border: 1px solid #ced4da;
 }
 
-#surveys {
-  width: 100%;
+.surveyTable {
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  padding: 33px 30px;
 }
-#surveys table {
-  border-spacing: 1px;
+.surveyTable table {
+  border-spacing: 1;
   border-collapse: collapse;
   background: white;
   border-radius: 10px;
@@ -147,48 +132,155 @@ input {
   margin: 0 auto;
   position: relative;
 }
-#surveys table td {
-  padding-left: 8px;
-  text-align: left;
+.surveyTable table * {
+  position: relative;
 }
-#surveys table th {
+.surveyTable table td, .surveyTable table th {
   padding-left: 8px;
+}
+.surveyTable table thead tr {
   height: 60px;
   background: #36304a;
-  text-align: left;
+  color: white;
 }
-#surveys table tr {
+.surveyTable table tbody tr {
   height: 50px;
 }
-#surveys table tr:last-child {
+.surveyTable table tbody tr:last-child {
   border: 0;
 }
-#surveys th {
+.surveyTable table td, .surveyTable table th {
+  text-align: left;
+}
+.surveyTable table td.l, .surveyTable table th.l {
+  text-align: right;
+}
+.surveyTable table td.c, .surveyTable table th.c {
+  text-align: center;
+}
+.surveyTable table td.r, .surveyTable table th.r {
+  text-align: center;
+}
+.surveyTable .tableHead th {
   font-size: 18px;
   color: #fff;
   line-height: 1.2;
   font-weight: unset;
 }
-#surveys tr:nth-child(even) {
+.surveyTable tbody tr:nth-child(even) {
   background-color: #f5f5f5;
 }
-#surveys tr {
+.surveyTable tbody tr {
   font-size: 15px;
   color: #808080;
   line-height: 1.2;
+  font-weight: unset;
 }
-#surveys tr:hover {
+.surveyTable tbody tr:hover {
   color: #555555;
   background-color: #f5f5f5;
+  cursor: pointer;
+}
+.surveyTable .tableColumn1 {
+  width: 260px;
+  padding-left: 40px;
+}
+.surveyTable .tableColumn2 {
+  width: 160px;
+}
+.surveyTable .tableColumn3 {
+  width: 245px;
+}
+.surveyTable .tableColumn4 {
+  width: 110px;
+  text-align: right;
+}
+.surveyTable .tableColumn5 {
+  width: 170px;
+  text-align: right;
+}
+@media screen and (max-width: 992px) {
+  .surveyTable table {
+    display: block;
+  }
+  .surveyTable table > *, .surveyTable table tr, .surveyTable table td, .surveyTable table th {
+    display: block;
+  }
+  .surveyTable table thead {
+    display: none;
+  }
+  .surveyTable table tbody tr {
+    height: auto;
+    padding: 37px 0;
+  }
+  .surveyTable table tbody tr td {
+    padding-left: 40% !important;
+    margin-bottom: 24px;
+  }
+  .surveyTable table tbody tr td:last-child {
+    margin-bottom: 0;
+  }
+  .surveyTable table tbody tr td:before {
+    font-size: 14px;
+    color: #999999;
+    line-height: 1.2;
+    font-weight: unset;
+    position: absolute;
+    width: 40%;
+    left: 30px;
+    top: 0;
+  }
+  .surveyTable table tbody tr td:nth-child(1):before {
+    content: "ID";
+  }
+  .surveyTable table tbody tr td:nth-child(2):before {
+    content: "Name";
+  }
+  .surveyTable table tbody tr td:nth-child(3):before {
+    content: "Link";
+  }
+  .surveyTable table tbody tr td:nth-child(4):before {
+    content: "Responses";
+  }
+  .surveyTable table tbody tr td:nth-child(5):before {
+    content: "Date";
+  }
+  .surveyTable .tableColumn4,
+.surveyTable .tableColumn5,
+.surveyTable .tableColumn6 {
+    text-align: left;
+  }
+  .surveyTable .tableColumn4,
+.surveyTable .tableColumn5,
+.surveyTable .tableColumn6,
+.surveyTable .tableColumn1,
+.surveyTable .tableColumn2,
+.surveyTable .tableColumn3 {
+    width: 100%;
+  }
+  .surveyTable tbody tr {
+    font-size: 14px;
+  }
+}
+@media (max-width: 576px) {
+  .surveyTable .surveyTable {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
 
 body {
   font-family: "Varela", sans-serif;
-  padding: 2em 1em;
+  padding: 0;
+  margin: 0;
 }
 
 h1 {
   text-align: center;
+}
+
+#container {
+  padding: 20px;
 }
 
 /*# sourceMappingURL=main.css.map */

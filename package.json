@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ryan-bush/WebProg_Coursework#readme",
   "devDependencies": {},
   "dependencies": {
+    "@fortawesome/fontawesome-pro": "^5.13.0",
     "chart.js": "^2.9.3",
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
