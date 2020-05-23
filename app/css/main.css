@@ -99,7 +99,7 @@
   border: none;
   padding: 15px 10px;
   text-decoration: none;
-  background: #4CBB17;
+  background: #4cbb17;
   color: #ffffff;
   cursor: pointer;
   text-align: center;
@@ -129,6 +129,57 @@ input {
   height: auto;
   border-radius: 2rem;
   border: 1px solid #ced4da;
+}
+
+#surveys {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#surveys table {
+  border-spacing: 1px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+#surveys table td {
+  padding-left: 8px;
+  text-align: left;
+}
+#surveys table th {
+  padding-left: 8px;
+  height: 60px;
+  background: #36304a;
+  text-align: left;
+}
+#surveys table tr {
+  height: 50px;
+}
+#surveys table tr:last-child {
+  border: 0;
+}
+#surveys th {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset;
+}
+#surveys tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+#surveys tr {
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.2;
+}
+#surveys tr:hover {
+  color: #555555;
+  background-color: #f5f5f5;
 }
 
 body {
