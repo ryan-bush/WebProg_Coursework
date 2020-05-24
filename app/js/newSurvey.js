@@ -29,7 +29,7 @@ const handleSubmit = event => {
         }
     }
     let result = document.getElementById('results');
-    let text = document.createTextNode(JSON.stringify(surveyJSON));
+    let text = document.createTextNode("Survey created. Please either download the JSON or submit the survey to be created.");
     result.appendChild(text);
     showLinks();
 };
@@ -53,12 +53,14 @@ function showLinks() {
     a.href = 'data:' + data;
     a.download = 'data.json';
     a.innerHTML = 'download JSON';
+    a.classList = "buttonPrimary";
 
     linksDiv.appendChild(a);
 
     let createSurveyButton = document.createElement('button');
     let createSurveyButtonText = document.createTextNode('Create Survey');
     createSurveyButton.id = 'createSurvey';
+    createSurveyButton.classList = "buttonSecondary";
     createSurveyButton.appendChild(createSurveyButtonText);
     createSurveyButton.addEventListener('click', submitButtonClick);
     linksDiv.appendChild(createSurveyButton);
@@ -106,6 +108,7 @@ function createShareLink(id) {
     let v = document.createElement('a');
     v.id = 'viewSurvey';
     v.href = "http://localhost:8080/survey#" + JSON.parse(id);
+    v.classList = "buttonPrimary";
     let vT = document.createTextNode('View Survey');
     a.appendChild(v);
     v.appendChild(vT);
@@ -127,19 +130,23 @@ function addTextQuestion() {
     typeField.setAttribute('value', 'text');
     typeField.disabled = true;
     typeField.id = 'questionType' + qID;
+    typeField.classList = 'surveyTypeInput';
     div.appendChild(typeField);
 
     idField.setAttribute('type', 'text');
     idField.setAttribute('placeholder', 'Question ID');
     idField.id = 'questionName' + qID;
+    idField.classList = 'surveyIdInput';
     div.appendChild(idField);
 
     questionField.setAttribute('type', 'text');
     questionField.setAttribute('placeholder', 'Question');
     questionField.id = 'questionQues' + qID;
+    questionField.classList = 'surveyNameInput';
     div.appendChild(questionField);
 
     deleteButton.id = 'deleteQuestion' + qID;
+    deleteButton.classList = 'buttonSmallRed';
     deleteButton.appendChild(deleteButtonText);
     deleteButton.setAttribute("onclick", "removeElement('question" + qID + "')");
     div.appendChild(deleteButton);
@@ -161,19 +168,23 @@ function addNumberQuestion() {
     typeField.setAttribute('value', 'number');
     typeField.disabled = true;
     typeField.id = 'questionType' + qID;
+    typeField.classList = 'surveyTypeInput';
     div.appendChild(typeField);
 
     idField.setAttribute('type', 'text');
     idField.setAttribute('placeholder', 'Question ID');
     idField.id = 'questionName' + qID;
+    idField.classList = 'surveyIdInput';
     div.appendChild(idField);
 
     questionField.setAttribute('type', 'text');
     questionField.setAttribute('placeholder', 'Question');
     questionField.id = 'questionQues' + qID;
+    questionField.classList = 'surveyNameInput';
     div.appendChild(questionField);
 
     deleteButton.id = 'deleteQuestion' + qID;
+    deleteButton.classList = 'buttonSmallRed';
     deleteButton.appendChild(deleteButtonText);
     deleteButton.setAttribute("onclick", "removeElement('question" + qID + "')");
     div.appendChild(deleteButton);
@@ -198,24 +209,29 @@ function addSingleSelectQuestion() {
     typeField.setAttribute('value', 'single-select');
     typeField.disabled = true;
     typeField.id = 'questionType' + qID;
+    typeField.classList = 'surveyTypeInput';
     div.appendChild(typeField);
 
     idField.setAttribute('type', 'text');
     idField.setAttribute('placeholder', 'Question ID');
     idField.id = 'questionName' + qID;
+    idField.classList = 'surveyIdInput';
     div.appendChild(idField);
 
     questionField.setAttribute('type', 'text');
     questionField.setAttribute('placeholder', 'Question');
     questionField.id = 'questionQues' + qID;
+    questionField.classList = 'surveyNameInput';
     div.appendChild(questionField);
 
     addOptionButton.id = 'addSelectQuestion' + qID;
+    addOptionButton.classList = 'buttonSmall';
     addOptionButton.appendChild(addOptionButtonText);
     addOptionButton.setAttribute("onclick", "addSelectOption('" + qID + "')");
     div.appendChild(addOptionButton);
 
     deleteButton.id = 'deleteQuestion' + qID;
+    deleteButton.classList = 'buttonSmallRed';
     deleteButton.appendChild(deleteButtonText);
     deleteButton.setAttribute("onclick", "removeElement('question" + qID + "')");
     div.appendChild(deleteButton);
@@ -240,6 +256,7 @@ function addSelectOption(id) {
     questionDiv.appendChild(option);
 
     removeOptionButton.id = 'question' + id + 'RemoveButton' + optionCount;
+    removeOptionButton.classList = 'buttonSmallOrange';
     removeOptionButton.setAttribute('onclick', 'removeSelectOption('+ id + ', ' + optionCount + ')');
     removeOptionButton.appendChild(removeOptionButtonText);
     questionDiv.appendChild(removeOptionButton);
@@ -271,24 +288,29 @@ function addMultiSelectQuestion() {
     typeField.setAttribute('value', 'multi-select');
     typeField.disabled = true;
     typeField.id = 'questionType' + qID;
+    typeField.classList = 'surveyTypeInput';
     div.appendChild(typeField);
 
     idField.setAttribute('type', 'text');
     idField.setAttribute('placeholder', 'Question ID');
     idField.id = 'questionName' + qID;
+    idField.classList = 'surveyIdInput';
     div.appendChild(idField);
 
     questionField.setAttribute('type', 'text');
     questionField.setAttribute('placeholder', 'Question');
     questionField.id = 'questionQues' + qID;
+    questionField.classList = 'surveyNameInput';
     div.appendChild(questionField);
 
     addOptionButton.id = 'addSelectQuestion' + qID;
+    addOptionButton.classList = 'buttonSmall';
     addOptionButton.appendChild(addOptionButtonText);
     addOptionButton.setAttribute("onclick", "addSelectOption('" + qID + "')");
     div.appendChild(addOptionButton);
 
     deleteButton.id = 'deleteQuestion' + qID;
+    deleteButton.classList = 'buttonSmallRed';
     deleteButton.appendChild(deleteButtonText);
     deleteButton.setAttribute("onclick", "removeElement('question" + qID + "')");
     div.appendChild(deleteButton);

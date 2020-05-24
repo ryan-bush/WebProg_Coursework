@@ -13,6 +13,17 @@ input {
   font-size: 16px;
 }
 
+.surveyTypeInput {
+  width: 10%;
+}
+.surveyIdInput {
+  width: 40%
+}
+
+.surveyQuestionInput {
+  width: 30%;
+}
+
 @media (max-width: 576px) {
   input {
     width: 80%;

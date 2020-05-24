@@ -2,6 +2,7 @@
   display: inline-block;
   border: none;
   padding: 15px 10px;
+  margin-right: 15px;
   text-decoration: none;
   background: $buttonPrimary;
   color: #ffffff;
@@ -31,6 +32,7 @@
   display: inline-block;
   border: none;
   padding: 15px 10px;
+  margin-right: 15px;
   text-decoration: none;
   background: $buttonSecondary;
   color: #ffffff;
@@ -53,6 +55,35 @@
 }
 
 .buttonSecondary:active {
+  transform: scale(0.99);
+}
+
+.buttonRed {
+  display: inline-block;
+  border: none;
+  padding: 15px 10px;
+  text-decoration: none;
+  background: $buttonRed;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.buttonRed:hover, .buttonRed:focus {
+  background: $buttonRedHover;
+}
+
+.buttonRed:focus {
+  outline: 1px solid $white;
+  outline-offset: -4px;
+}
+
+.buttonRed:active {
   transform: scale(0.99);
 }
 
@@ -83,5 +114,65 @@
 }
 
 .buttonSmall:active {
+  transform: scale(0.99);
+}
+
+.buttonSmallRed {
+  display: inline-block;
+  border: none;
+  padding: 10px 5px;
+  text-decoration: none;
+  background-color: $buttonRed;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.buttonSmallRed:hover, .buttonSmallRed:focus {
+  background: $buttonRedHover;
+}
+
+.buttonSmallRed:focus {
+  outline: 1px solid $white;
+  outline-offset: -4px;
+}
+
+.buttonSmallRed:active {
+  transform: scale(0.99);
+}
+
+.buttonSmallOrange {
+  display: inline-block;
+  border: none;
+  padding: 10px 5px;
+  text-decoration: none;
+  background-color: $buttonOrange;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.buttonSmallOrange:hover, .buttonSmallOrange:focus {
+  background: $buttonOrangeHover;
+}
+
+.buttonSmallOrange:focus {
+  outline: 1px solid $white;
+  outline-offset: -4px;
+}
+
+.buttonSmallOrange:active {
   transform: scale(0.99);
 }

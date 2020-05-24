@@ -116,9 +116,8 @@ function toJSONString( form ) {
 }
 
 function submitButtonClick() {
-    let form = document.querySelector('form');
     let data = JSON.stringify($('form').serializeArray());
-    $('#results').text(JSON.stringify($('form').serializeArray()));
+    $('#results').text("Your results have been sent.");
     sendResult(data);
     showResultsPage();
 }
@@ -135,6 +134,7 @@ function showResultsPage() {
     let v = document.createElement('a');
     v.id = 'viewResults';
     v.href = "http://localhost:8080/results#" + id;
+    v.classList = "buttonPrimary";
     let vT = document.createTextNode('View Results');
     a.appendChild(v);
     v.appendChild(vT);

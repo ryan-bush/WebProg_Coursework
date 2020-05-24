@@ -1,4 +1,6 @@
 let obj = {};
+let mainSurvey = {};
+let mainSurveyQuestions = {};
 let responses = [];
 let sortedResponses = {};
 let chartColours = ['#ff6385', '#36a3eb', '#ffcf56', '#4bc0c0', '#ff4040', '#ffa940', '#5040ff', '#40ff63',
@@ -19,14 +21,26 @@ function getSurveyId() {
     return window.location.hash.substring(1);
 }
 
-function showResults(res, resName) {
+function showResults(res, resName, resSurvey) {
     obj = res;
+    mainSurvey = resSurvey;
+    mainSurveyQuestions = JSON.parse(resSurvey.json);
+    mainSurveyQuestions = mainSurveyQuestions.questions;
     addTitle(res, resName, obj);
     mergeResults(obj);
     orderResults(responses);
     createDownloadLink();
     showResponses();
 }
+
+function getQuestionFromName(name) {
+    for (let i = 0; i < mainSurveyQuestions.length; i++) {
+        if (mainSurveyQuestions[i].id === name) {
+            return mainSurveyQuestions[i].text;
+        }
+    }
+}
+
 function showResponses() {
     for (let i in sortedResponses) {
         let d = document.createElement('div');
@@ -109,6 +123,7 @@ function showResponses() {
         let x = document.createElement('canvas');
         x.id = 'chartResponse' + i;
         d.appendChild(x);
+
         // Create Chart
         let myChart = new Chart(x, {
             type: 'pie',
@@ -123,10 +138,10 @@ function showResponses() {
             },
             options: {
                 responsive:true,
-                maintainAspectRatio:false,
                 title: {
                     display: true,
-                    text: 'Responses for ' + capitalize(i)
+                    text: 'Responses for ' + getQuestionFromName(i)
+                    // text: 'Responses for ' + mainSurveyQuestions[i].name
                 },
             }
         });
@@ -155,7 +170,6 @@ function showBarChart(i, a, b) {
         },
         options: {
             responsive:true,
-            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -193,7 +207,6 @@ function showHorizontalBarChart(i, a, b) {
         },
         options: {
             responsive:true,
-            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -230,7 +243,6 @@ function showPieChart(i, a, b) {
         },
         options: {
             responsive:true,
-            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -260,7 +272,6 @@ function showDonutChart(i, a, b) {
         },
         options: {
             responsive:true,
-            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -340,11 +351,11 @@ function addTitle(res, resName, obj) {
     t.appendChild(tT);
 
     let s = document.createElement('small');
-    let sT = document.createTextNode(res[0].time)
+    let sT = document.createTextNode("Survey Time: " + mainSurvey.time);
     s.appendChild(sT);
 
     let r = document.createElement('small');
-    let rT = document.createTextNode(res[0].surveyID);
+    let rT = document.createTextNode("Survey ID: " + res[0].surveyID);
     r.appendChild(rT);
 
     document.getElementById("title").appendChild(t);
@@ -373,7 +384,15 @@ async function loadResults() {
         } else {
             resName = { msg: 'failed to load name :-(' };
         }
-        showResults(res, resName);
+        // Fetch Survey Name
+        const responseSurvey = await fetch(`surveys/${id}`);
+        let resSurvey;
+        if (responseSurvey.ok) {
+            resSurvey = await responseSurvey.json();
+        } else {
+            resSurvey = { msg: 'failed to load survey :-(' };
+        }
+        showResults(res, resName, resSurvey);
     }
 }
 

@@ -2,7 +2,6 @@ let surveys = {};
 
 function showAllSurveys() {
     surveys = JSON.parse(surveys);
-    console.log(surveys);
     showTable()
 }
 

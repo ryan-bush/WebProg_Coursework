@@ -12,7 +12,7 @@ const dbConn = init();
 
 async function listSurveys() {
     const db = await dbConn;
-    const surveys = await db.all('SELECT * FROM Surveys ORDER BY time DESC LIMIT 10');
+    const surveys = await db.all('SELECT * FROM Surveys ORDER BY time DESC LIMIT 100');
     return surveys;
 }
 
