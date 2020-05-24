@@ -7,6 +7,13 @@ const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
+const randomColour = (j) => {
+    let colours = [];
+    for(let i = 0; i < j; i++) {
+        colours.push(chartColours[Math.floor(Math.random() * chartColours.length)]);
+    }
+    return colours;
+}
 
 function getSurveyId() {
     return window.location.hash.substring(1);
@@ -110,7 +117,7 @@ function showResponses() {
                 datasets: [{
                     label: '# of Votes',
                     data: a[1],
-                    backgroundColor: chartColours,
+                    backgroundColor: randomColour(a[0].length),
                     borderWidth: 1
                 }]
             },

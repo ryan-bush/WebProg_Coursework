@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Questionnaire Maker</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-IIED/eyOkM6ihtOiQsX2zizxFBphgnv1zbe1bKA+njdFzkr6cDNy16jfIKWu4FNH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<nav class="mainNav" id="mainNav">
+    <a href="/"><i class="fas fa-home"></i> Home</a>
+    <a href="/surveys"><i class="fas fa-poll"></i> Surveys</a>
+    <a href="/upload"><i class="fas fa-cloud-upload"></i> Upload Survey</a>
+    <a href="/new"><i class="fas fa-layer-plus"></i> Create Survey</a>
+    <a href="javascript:void(0);" class="icon" onclick="navigationCollapse()">
+        <i class="fa fa-bars"></i>
+    </a>
+</nav>
+<section id="container">
+    <section id="format">
+        <h2>Accepted JSON Format</h2>
+        <h3>Example Usage</h3>
+        <pre><code>
+{
+  "name": "Example Questionnaire",
+  "questions": [
+    {
+      "id": "name",
+      "text": "What is your name?",
+      "type": "text"
+    },
+    {
+      "id": "quest",
+      "text": "What is your quest?",
+      "type": "text"
+    },
+    {
+      "id": "col",
+      "text": "What is your favourite colour?",
+      "type": "text"
+    },
+    {
+      "id": "velo",
+      "text": "What is the air-speed velocity of an unladen swallow?",
+      "type": "number"
+    },
+    {
+      "id": "lord",
+      "text": "Which is the best lord?",
+      "type": "single-select",
+      "options": [
+        "Lord of the Rings",
+        "Lord of the Flies",
+        "Lord of the Dance",
+        "Lorde"
+      ]
+    },
+    {
+      "id": "langs",
+      "text": "Which computer languages have you used?",
+      "type": "multi-select",
+      "options": [
+        "JavaScript",
+        "Java",
+        "C",
+        "Python",
+        "Ook",
+        "LISP"
+      ]
+    }
+  ]
+}
+        </code></pre>
+        <h3>Name</h3>
+        <p>Name of your survey</p>
+        <h3>Questions</h3>
+        <p>All of your survey questions.</p>
+    </section>
+</section>
+
+<script>
+    function navigationCollapse() {
+        let x = document.getElementById("mainNav");
+        if (x.className === "mainNav") {
+            x.className += " responsive";
+        } else {
+            x.className = "mainNav";
+        }
+    }
+</script>
+</body>
+</html>
