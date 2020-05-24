@@ -299,6 +299,16 @@ function addMultiSelectQuestion() {
     addSelectOption(qID);
     qID++;
 }
+
+function navigationCollapse() {
+    let x = document.getElementById("mainNav");
+    if (x.className === "mainNav") {
+        x.className += " responsive";
+    } else {
+        x.className = "mainNav";
+    }
+}
+
 function resetElements(){
     document.getElementById('survey').innerHTML = '';
 }

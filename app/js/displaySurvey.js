@@ -91,6 +91,7 @@ function createSurvey(json) {
     }
     let submitButton = document.createElement('button');
     submitButton.id = 'submitSurvey';
+    submitButton.classList = 'buttonSecondary';
     let submitButtonText = document.createTextNode('Submit Survey');
     submitButton.appendChild(submitButtonText);
     submitButton.addEventListener('click', submitButtonClick);
@@ -177,6 +178,14 @@ async function loadSurvey() {
     showSurvey(survey);
 }
 
+function navigationCollapse() {
+    let x = document.getElementById("mainNav");
+    if (x.className === "mainNav") {
+        x.className += " responsive";
+    } else {
+        x.className = "mainNav";
+    }
+}
 
 function pageLoaded() {
     loadSurvey();

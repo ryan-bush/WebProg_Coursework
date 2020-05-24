@@ -5,28 +5,6 @@ let obj;
 document.getElementById('create').onclick = function() {
     obj = JSON.parse(document.getElementById('result').value);
     console.log(obj);
-
-    let d = document.createElement('div');
-    let title = document.createElement('p');
-    let title1 = document.createTextNode(obj.name);
-    d.appendChild(title);
-    title.appendChild(title1);
-
-    for (let i = 0; i < obj.questions.length; i++) {
-        let a = document.createElement('p');
-        let aA = document.createTextNode(obj.questions[i].id);
-        a.appendChild(aA);
-        let aB = document.createTextNode(obj.questions[i].text);
-        a.appendChild(aB);
-        let aC = document.createTextNode(obj.questions[i].type);
-        a.appendChild(aC);
-        if(obj.questions[i].type === "multi-select" || obj.questions[i].type === "single-select") {
-            let aD = document.createTextNode(obj.questions[i].options);
-            a.appendChild(aD);
-        }
-        title.appendChild(a);
-    }
-    document.getElementById("stats").appendChild(d);
     createFormatted(obj);
 }
 
@@ -34,7 +12,7 @@ function createFormatted(json) {
     if(json == null) { console.log("no json") }
     console.log(json);
 
-    let a = document.createElement('div');
+    let a = document.createElement('section');
     // Show Title
     let aTitle = document.createElement('h2');
     let aTitleText = document.createTextNode(json.name);
@@ -98,6 +76,7 @@ function createFormatted(json) {
     }
     let submitButton = document.createElement('button');
     submitButton.id = 'submitSurvey';
+    submitButton.className = 'buttonPrimary';
     let submitButtonText = document.createTextNode('Create Survey');
     document.getElementById("form").appendChild(submitButton);
     submitButton.appendChild(submitButtonText);
@@ -160,7 +139,7 @@ async function sendSurvey() {
 
 function createShareLink(id) {
     console.log(id);
-    let a = document.createElement('div');
+    let a = document.createElement('section');
     // Show Share Title
     let aTitle = document.createElement('h2');
     let aTitleText = document.createTextNode("Share Link");
@@ -176,9 +155,19 @@ function createShareLink(id) {
 
     let v = document.createElement('a');
     v.id = 'viewSurvey';
+    v.className = 'buttonSecondary';
     v.href = "http://localhost:8080/survey#" + JSON.parse(id);
     let vT = document.createTextNode('View Survey');
     a.appendChild(v);
     v.appendChild(vT);
     document.getElementById("share").appendChild(a);
+}
+
+function navigationCollapse() {
+    let x = document.getElementById("mainNav");
+    if (x.className === "mainNav") {
+        x.className += " responsive";
+    } else {
+        x.className = "mainNav";
+    }
 }

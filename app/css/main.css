@@ -63,6 +63,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .buttonPrimary:hover, .buttonPrimary:focus {
@@ -91,6 +92,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .buttonSecondary:hover, .buttonSecondary:focus {
@@ -106,13 +108,82 @@
   transform: scale(0.99);
 }
 
+.buttonSmall {
+  display: inline-block;
+  border: none;
+  padding: 10px 5px;
+  text-decoration: none;
+  background: #4f54f9;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.buttonSmall:hover, .buttonSmall:focus {
+  background: #4549b4;
+}
+
+.buttonSmall:focus {
+  outline: 1px solid #ffffff;
+  outline-offset: -4px;
+}
+
+.buttonSmall:active {
+  transform: scale(0.99);
+}
+
+label {
+  width: 20%;
+}
+
 input {
   display: inline-block;
-  width: 75%;
+  width: 90%;
   padding: 0.75rem 1.5rem;
   height: auto;
-  border-radius: 2rem;
+  border-radius: 1rem;
   border: 1px solid #ced4da;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+@media (max-width: 576px) {
+  input {
+    width: 80%;
+  }
+}
+textarea {
+  display: inline-block;
+  width: 90%;
+  padding: 0.75rem 1.5rem;
+  height: auto;
+  border-radius: 1rem;
+  border: 1px solid #ced4da;
+  font-size: 16px;
+  min-height: 13rem;
+  margin-bottom: 15px;
+}
+
+select {
+  display: inline-block;
+  width: 90%;
+  padding: 0.75rem 1.5rem;
+  height: auto;
+  border-radius: 1rem;
+  border: 1px solid #ced4da;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+#jsonForm {
+  border: 0.4px solid #ced4da;
+  margin-bottom: 15px;
 }
 
 .surveyTable {
@@ -281,6 +352,21 @@ h1 {
 
 #container {
   padding: 20px;
+}
+
+small {
+  margin-top: 10px;
+  display: block;
+}
+
+canvas {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  canvas {
+    max-height: 60%;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

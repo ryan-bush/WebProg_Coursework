@@ -11,6 +11,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .buttonPrimary:hover, .buttonPrimary:focus {
@@ -39,6 +40,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .buttonSecondary:hover, .buttonSecondary:focus {
@@ -51,5 +53,35 @@
 }
 
 .buttonSecondary:active {
+  transform: scale(0.99);
+}
+
+.buttonSmall {
+  display: inline-block;
+  border: none;
+  padding: 10px 5px;
+  text-decoration: none;
+  background: $buttonPrimary;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.buttonSmall:hover, .buttonSmall:focus {
+  background: $buttonPrimaryHover;
+}
+
+.buttonSmall:focus {
+  outline: 1px solid $white;
+  outline-offset: -4px;
+}
+
+.buttonSmall:active {
   transform: scale(0.99);
 }

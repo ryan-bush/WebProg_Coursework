@@ -26,7 +26,6 @@ function showResponses() {
         d.id = 'responses' + i;
         document.getElementById("results").appendChild(d);
 
-
         let a = occurrencesInArray(sortedResponses[i])
 
         let t = document.createElement('h3');
@@ -68,24 +67,28 @@ function showResponses() {
         let chartButtonBar = document.createElement('button');
         let chartButtonBarText = document.createTextNode('Bar Chart');
         chartButtonBar.id = 'chartButtonBar';
+        chartButtonBar.classList = 'buttonSmall';
         chartButtons.appendChild(chartButtonBar);
         chartButtonBar.appendChild(chartButtonBarText);
         // Horizontal Bar Chart
         let chartButtonHorBar = document.createElement('button');
         let chartButtonHorBarText = document.createTextNode('Horizontal Bar Chart');
         chartButtonHorBar.id = 'chartButtonHorBar';
+        chartButtonHorBar.classList = 'buttonSmall';
         chartButtons.appendChild(chartButtonHorBar);
         chartButtonHorBar.appendChild(chartButtonHorBarText);
         // Pie Chart
         let chartButtonPie = document.createElement('button');
         let chartButtonPieText = document.createTextNode('Pie Chart');
         chartButtonPie.id  = 'chartButtonPie';
+        chartButtonPie.classList = 'buttonSmall';
         chartButtons.appendChild(chartButtonPie);
         chartButtonPie.appendChild(chartButtonPieText);
         // Pie Chart
         let chartButtonDonut = document.createElement('button');
         let chartButtonDonutText = document.createTextNode('Donut Chart');
         chartButtonDonut.id  = 'chartButtonDonut';
+        chartButtonDonut.classList = 'buttonSmall';
         chartButtons.appendChild(chartButtonDonut);
         chartButtonDonut.appendChild(chartButtonDonutText);
 
@@ -112,6 +115,8 @@ function showResponses() {
                 }]
             },
             options: {
+                responsive:true,
+                maintainAspectRatio:false,
                 title: {
                     display: true,
                     text: 'Responses for ' + capitalize(i)
@@ -142,6 +147,8 @@ function showBarChart(i, a, b) {
             }]
         },
         options: {
+            responsive:true,
+            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -178,6 +185,8 @@ function showHorizontalBarChart(i, a, b) {
             }]
         },
         options: {
+            responsive:true,
+            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -213,6 +222,8 @@ function showPieChart(i, a, b) {
             }]
         },
         options: {
+            responsive:true,
+            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -241,6 +252,8 @@ function showDonutChart(i, a, b) {
             }]
         },
         options: {
+            responsive:true,
+            maintainAspectRatio:false,
             title: {
                 display: true,
                 text: 'Responses for ' + capitalize(i)
@@ -253,9 +266,10 @@ function createDownloadLink() {
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sortedResponses,null,2));
 
     let a = document.createElement('a');
+    a.classList = 'buttonSecondary';
     a.href = 'data:' + data;
     a.download = 'data.json';
-    a.innerHTML = 'download JSON';
+    a.innerHTML = 'Download JSON';
 
     let container = document.getElementById('download');
     container.appendChild(a);
@@ -362,6 +376,15 @@ function showNoResponses() {
     heading.appendChild(headingText);
 
     document.getElementById("title").appendChild(heading);
+}
+
+function navigationCollapse() {
+    let x = document.getElementById("mainNav");
+    if (x.className === "mainNav") {
+        x.className += " responsive";
+    } else {
+        x.className = "mainNav";
+    }
 }
 
 function pageLoaded() {

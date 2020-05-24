@@ -4,33 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Questionnaire Maker</title>
-        <link rel="stylesheet" href="css/main.css">
-    <style>
-        small {
-            margin-top: 10px;
-            display:block;
-        }
-    </style>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-IIED/eyOkM6ihtOiQsX2zizxFBphgnv1zbe1bKA+njdFzkr6cDNy16jfIKWu4FNH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-<nav class="mainNav">
-    <ul>
-        <li class="mainNavCurrent"><a href="#">Nav Link 1</a></li>
-        <li><a href="#">Nav Link 2</a></li>
-        <li><a href="#">Nav Link 3</a></li>
-        <li><a href="#">Nav Link 4</a></li>
-        <li><a href="#">Nav Link 5</a></li>
-    </ul>
+<nav class="mainNav" id="mainNav">
+    <a href="/"><i class="fas fa-home"></i> Home</a>
+    <a href="/surveys"><i class="fas fa-poll"></i> Surveys</a>
+    <a href="/upload"><i class="fas fa-cloud-upload"></i> Upload Survey</a>
+    <a href="/new"><i class="fas fa-layer-plus"></i> Create Survey</a>
+    <a href="javascript:void(0);" class="icon" onclick="navigationCollapse()">
+        <i class="fa fa-bars"></i>
+    </a>
 </nav>
-<div id="title">
+<section id="container">
+    <section id="title">
 
-</div>
-<div id="download">
+    </section>
+    <section id="download">
 
-</div>
-<div id="results">
+    </section>
+    <section id="results">
 
-</div>
+    </section>
+</section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
 <script src="js/results.js"></script>
 </body>

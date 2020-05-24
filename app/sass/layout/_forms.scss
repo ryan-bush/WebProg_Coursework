@@ -1,8 +1,52 @@
+label {
+  width: 20%;
+}
+
 input {
   display: inline-block;
-  width: 75%;
+  width: 90%;
   padding: 0.75rem 1.5rem;
   height: auto;
-  border-radius: 2rem;
+  border-radius: 1rem;
   border: 1px solid #ced4da;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+@media (max-width: 576px) {
+  input {
+    width: 80%;
+  }
+}
+
+textarea {
+  display: inline-block;
+  width: 90%;
+  padding: 0.75rem 1.5rem;
+  height: auto;
+  border-radius: 1rem;
+  border: 1px solid #ced4da;
+  font-size: 16px;
+  min-height: 13rem;
+  margin-bottom: 15px;
+}
+
+select  {
+  display: inline-block;
+  width: 90%;
+  padding: 0.75rem 1.5rem;
+  height: auto;
+  border-radius: 1rem;
+  border: 1px solid #ced4da;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+select[multiple] {
+
+}
+
+#jsonForm {
+  border: 0.4px solid #ced4da;
+  margin-bottom: 15px;
 }
