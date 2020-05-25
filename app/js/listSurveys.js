@@ -13,6 +13,12 @@ function showAllSurveys() {
  */
 async function showTable() {
     let surveyElement = document.getElementById('surveys');
+    let loading = document.createElement('p');
+    loading.id = 'loadingText';
+    let loadingText = document.createTextNode('Loading...');
+    loading.appendChild(loadingText);
+    surveyElement.appendChild(loading);
+
     let table = document.createElement('table');
     let tableHead = document.createElement('thead');
     let tableBody = document.createElement('tbody');
@@ -94,6 +100,7 @@ async function showTable() {
         tableData5.appendChild(tableDataText5);
         tableData6.appendChild(tableDataText6);
     }
+    loading.parentNode.removeChild(loading);
     surveyElement.appendChild(table);
 }
 

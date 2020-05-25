@@ -146,7 +146,7 @@ function showResultsPage() {
 
     let link = document.createElement('a');
     link.id = 'viewResults';
-    link.href = "http://localhost:8080/results#" + id;
+    link.href = "/results#" + id;
     link.classList = "buttonPrimary";
     let linkText = document.createTextNode('View Results');
     section.appendChild(link);
