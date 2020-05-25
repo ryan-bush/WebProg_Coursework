@@ -1,96 +1,107 @@
 let surveys = {};
 
+/**
+ * Stores surveys and enables creation of tableelements
+ */
 function showAllSurveys() {
     surveys = JSON.parse(surveys);
     showTable()
 }
 
+/**
+ * Creates HTML for survey table
+ */
 async function showTable() {
     let surveyElement = document.getElementById('surveys');
     let table = document.createElement('table');
     let tableHead = document.createElement('thead');
     let tableBody = document.createElement('tbody');
-    let tR = document.createElement('tr');
-    tR.classList = 'tableHead';
-    let tH1 = document.createElement('th');
-    tH1.classList = 'tableColumn1'
-    let tH2 = document.createElement('th');
-    tH2.classList = 'tableColumn2'
-    let tH3 = document.createElement('th');
-    tH3.classList = 'tableColumn3'
-    let tH4 = document.createElement('th');
-    tH4.classList = 'tableColumn4'
-    let tH5 = document.createElement('th');
-    tH5.classList = 'tableColumn5'
-    let tH6 = document.createElement('th');
-    tH6.classList = 'tableColumn6'
-    let tH11 = document.createTextNode('Survey ID');
-    let tH21 = document.createTextNode('Survey Name');
-    let tH31 = document.createTextNode('Survey Link');
-    let tH41 = document.createTextNode('Survey Responses');
-    let tH51 = document.createTextNode('Number of Responses');
-    let tH61 = document.createTextNode('Date');
+    let tableHeadingRow = document.createElement('tr');
+    tableHeadingRow.classList = 'tableHead';
+    let tableHeading1 = document.createElement('th');
+    tableHeading1.classList = 'tableColumn1'
+    let tableHeading2 = document.createElement('th');
+    tableHeading2.classList = 'tableColumn2'
+    let tableHeading3 = document.createElement('th');
+    tableHeading3.classList = 'tableColumn3'
+    let tableHeading4 = document.createElement('th');
+    tableHeading4.classList = 'tableColumn4'
+    let tableHeading5 = document.createElement('th');
+    tableHeading5.classList = 'tableColumn5'
+    let tableHeading6 = document.createElement('th');
+    tableHeading6.classList = 'tableColumn6'
+    let tableHeadingText1 = document.createTextNode('Survey ID');
+    let tableHeadingText2 = document.createTextNode('Survey Name');
+    let tableHeadingText3 = document.createTextNode('Survey Link');
+    let tableHeadingText4 = document.createTextNode('Survey Responses');
+    let tableHeadingText5 = document.createTextNode('Number of Responses');
+    let tableHeadingText6 = document.createTextNode('Date');
 
     table.appendChild(tableHead);
-    tableHead.appendChild(tR);
-    tR.appendChild(tH1);
-    tR.appendChild(tH2);
-    tR.appendChild(tH3);
-    tR.appendChild(tH4);
-    tR.appendChild(tH5);
-    tR.appendChild(tH6);
-    tH1.appendChild(tH11);
-    tH2.appendChild(tH21);
-    tH3.appendChild(tH31);
-    tH4.appendChild(tH41);
-    tH5.appendChild(tH51);
-    tH6.appendChild(tH61);
+    tableHead.appendChild(tableHeadingRow);
+    tableHeadingRow.appendChild(tableHeading1);
+    tableHeadingRow.appendChild(tableHeading2);
+    tableHeadingRow.appendChild(tableHeading3);
+    tableHeadingRow.appendChild(tableHeading4);
+    tableHeadingRow.appendChild(tableHeading5);
+    tableHeadingRow.appendChild(tableHeading6);
+    tableHeading1.appendChild(tableHeadingText1);
+    tableHeading2.appendChild(tableHeadingText2);
+    tableHeading3.appendChild(tableHeadingText3);
+    tableHeading4.appendChild(tableHeadingText4);
+    tableHeading5.appendChild(tableHeadingText5);
+    tableHeading6.appendChild(tableHeadingText6);
     table.appendChild(tableBody);
 
     for (let i = 0; i < surveys.length; i++) {
-        let tRow = document.createElement('tr');
-        let tD1 = document.createElement('td');
-        tD1.classList = 'tableColumn1';
-        let tD2 = document.createElement('td');
-        tD2.classList = 'tableColumn2';
-        let tD3 = document.createElement('td');
-        tD3.classList = 'tableColumn3';
-        let tD4 = document.createElement('td');
-        tD4.classList = 'tableColumn4';
-        let tD5 = document.createElement('td');
-        tD5.classList = 'tableColumn5';
-        let tD6 = document.createElement('td');
-        tD6.classList = 'tableColumn6';
-        let tD11 = document.createTextNode(surveys[i].id);
+        let tableBodyRow = document.createElement('tr');
+        let tableData1 = document.createElement('td');
+        tableData1.classList = 'tableColumn1';
+        let tableData2 = document.createElement('td');
+        tableData2.classList = 'tableColumn2';
+        let tableData3 = document.createElement('td');
+        tableData3.classList = 'tableColumn3';
+        let tableData4 = document.createElement('td');
+        tableData4.classList = 'tableColumn4';
+        let tableData5 = document.createElement('td');
+        tableData5.classList = 'tableColumn5';
+        let tableData6 = document.createElement('td');
+        tableData6.classList = 'tableColumn6';
+        let tableDataText1 = document.createTextNode(surveys[i].id);
         let name = await getSurveyName(surveys[i].id);
-        let tD21 = document.createTextNode(name);
-        let tD31 = document.createElement("a");
-        let tD32 = document.createTextNode("View Survey");
-        tD31.href = "survey#" + surveys[i].id;
-        let tD41 = document.createElement("a");
-        let tD42 = document.createTextNode("View Responses");
-        tD41.href = "results#" + surveys[i].id;
-        let tD51 = document.createTextNode(await getSurveyResponses(surveys[i].id));
-        let tD61 = document.createTextNode(surveys[i].time);
-        tableBody.appendChild(tRow);
-        tRow.appendChild(tD1);
-        tRow.appendChild(tD2);
-        tRow.appendChild(tD3);
-        tRow.appendChild(tD4);
-        tRow.appendChild(tD5);
-        tRow.appendChild(tD6);
-        tD1.appendChild(tD11);
-        tD2.appendChild(tD21);
-        tD3.appendChild(tD31);
-        tD31.appendChild(tD32);
-        tD4.appendChild(tD41);
-        tD41.appendChild(tD42);
-        tD5.appendChild(tD51);
-        tD6.appendChild(tD61);
+        let tableDataText2 = document.createTextNode(name);
+        let tableDataText3 = document.createElement("a");
+        let tableDataTextNode3 = document.createTextNode("View Survey");
+        tableDataTextNode3.href = "survey#" + surveys[i].id;
+        let tableDataText4 = document.createElement("a");
+        let tableDataTextNode4 = document.createTextNode("View Responses");
+        tableDataTextNode4.href = "results#" + surveys[i].id;
+        let tableDataText5 = document.createTextNode(await getSurveyResponses(surveys[i].id));
+        let tableDataText6 = document.createTextNode(surveys[i].time);
+        tableBody.appendChild(tableBodyRow);
+        tableBodyRow.appendChild(tableData1);
+        tableBodyRow.appendChild(tableData2);
+        tableBodyRow.appendChild(tableData3);
+        tableBodyRow.appendChild(tableData4);
+        tableBodyRow.appendChild(tableData5);
+        tableBodyRow.appendChild(tableData6);
+        tableData1.appendChild(tableDataText1);
+        tableData2.appendChild(tableDataText2);
+        tableData3.appendChild(tableDataText3);
+        tableDataText3.appendChild(tableDataTextNode3);
+        tableData4.appendChild(tableDataText4);
+        tableDataText4.appendChild(tableDataTextNode4);
+        tableData5.appendChild(tableDataText5);
+        tableData6.appendChild(tableDataText6);
     }
     surveyElement.appendChild(table);
 }
 
+/**
+ * Retrieves survey name from Server
+ * @param  {String} id   ID of the survey
+ * @return {String}      Name of the survey
+ */
 async function getSurveyName(id) {
     const response = await fetch(`surveys/${id}`);
     let survey;
@@ -105,6 +116,11 @@ async function getSurveyName(id) {
     return surveyName;
 }
 
+/**
+ * Retrieves all survey responses and returns the amount
+ * @param  {String} id   ID of the survey
+ * @return {Number}      Number of responses
+ */
 async function getSurveyResponses(id) {
     const response = await fetch(`results/${id}`);
     let res;
@@ -116,6 +132,9 @@ async function getSurveyResponses(id) {
     return res.length;
 }
 
+/**
+ * Retrieves all surveys from the server
+ */
 async function loadAllSurveys() {
     const response = await fetch(`listSurveys`);
     if (response.ok) {
@@ -126,6 +145,9 @@ async function loadAllSurveys() {
     showAllSurveys();
 }
 
+/**
+ * Adds functionality for collapsable navigation on mobile
+ */
 function navigationCollapse() {
     let x = document.getElementById("mainNav");
     if (x.className === "mainNav") {
@@ -135,8 +157,10 @@ function navigationCollapse() {
     }
 }
 
+/**
+ * Handles page load
+ */
 function pageLoaded() {
     loadAllSurveys();
 }
-
 window.addEventListener('load', pageLoaded);

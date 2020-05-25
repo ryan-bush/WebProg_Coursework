@@ -1,7 +1,9 @@
 let qID = 0; // Question ID
-
 let surveyJSON = {name: "", questions: []};
 
+/**
+ * Handles the submit of Create Survey button
+ */
 const handleSubmit = event => {
     event.preventDefault();
     let surveyName = document.getElementById('surveyName');
@@ -33,29 +35,43 @@ const handleSubmit = event => {
     result.appendChild(text);
     showLinks();
 };
+
+/**
+ * Checks if a number is even
+ * @param {Number} value  Number
+ * @return {Number}       True or false
+ */
 function isEven(value) {
     return value % 2 === 0;
 }
+
 const submitButton = document.getElementById('submitButton');
 submitButton.addEventListener("click", handleSubmit, false);
 
+/**
+ * Removes section of the survey
+ * @param {Array} ele  ID of the element
+ */
 function removeElement(ele) {
     let surveySection = document.getElementById('survey');
     let surveyDeleteQuestion = document.getElementById(ele);
     surveySection.removeChild(surveyDeleteQuestion);
 }
 
+/**
+ * Show survey links
+ */
 function showLinks() {
     let linksDiv = document.getElementById('links');
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(surveyJSON,null,2));
 
-    let a = document.createElement('a');
-    a.href = 'data:' + data;
-    a.download = 'data.json';
-    a.innerHTML = 'download JSON';
-    a.classList = "buttonPrimary";
+    let link = document.createElement('a');
+    link.href = 'data:' + data;
+    link.download = 'data.json';
+    link.innerHTML = 'download JSON';
+    link.classList = "buttonPrimary";
 
-    linksDiv.appendChild(a);
+    linksDiv.appendChild(link);
 
     let createSurveyButton = document.createElement('button');
     let createSurveyButtonText = document.createTextNode('Create Survey');
@@ -66,11 +82,17 @@ function showLinks() {
     linksDiv.appendChild(createSurveyButton);
 }
 
+/**
+ * Handle Submit button click
+ */
 function submitButtonClick() {
     sendSurvey();
 }
 
-/** Use fetch to post a JSON message to the server */
+/**
+ * Sends the survey data to the server
+ * @param {Array} survey  JSON of the survey
+ */
 async function sendSurvey() {
     const response = await fetch('surveys', {
         method: 'POST',
@@ -82,39 +104,44 @@ async function sendSurvey() {
 
     if (response.ok) {
         const id = await response.json();
-        console.log(id);
         createShareLink(id);
     } else {
         console.log('failed to send message', response);
     }
 }
 
+/**
+ * Creates share link HTML for the uploaded survey
+ * @param {String} id  ID of the survey
+ */
 function createShareLink(id) {
-    console.log(id);
-    let a = document.createElement('div');
+    let section = document.createElement('section');
     // Show Share Title
-    let aTitle = document.createElement('h2');
-    let aTitleText = document.createTextNode("Share Link");
-    a.appendChild(aTitle);
-    aTitle.appendChild(aTitleText);
+    let title = document.createElement('h2');
+    let titleText = document.createTextNode("Share Link");
+    section.appendChild(title);
+    title.appendChild(titleText);
 
-    let b = document.createElement('input');
-    b.type = 'text';
-    b.name = 'share';
-    b.id = 'share';
-    b.value = "localhost:8080/survey#" + JSON.parse(id);
-    a.appendChild(b);
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'share';
+    input.id = 'share';
+    input.value = "localhost:8080/survey#" + JSON.parse(id);
+    section.appendChild(input);
 
-    let v = document.createElement('a');
-    v.id = 'viewSurvey';
-    v.href = "http://localhost:8080/survey#" + JSON.parse(id);
-    v.classList = "buttonPrimary";
-    let vT = document.createTextNode('View Survey');
-    a.appendChild(v);
-    v.appendChild(vT);
-    document.getElementById("links").appendChild(a);
+    let link = document.createElement('a');
+    link.id = 'viewSurvey';
+    link.href = "http://localhost:8080/survey#" + JSON.parse(id);
+    link.classList = "buttonPrimary";
+    let linkText = document.createTextNode('View Survey');
+    section.appendChild(link);
+    link.appendChild(linkText);
+    document.getElementById("links").appendChild(section);
 }
 
+/**
+ * Adds Text Question to the page
+ */
 function addTextQuestion() {
     let div = document.createElement('div');
     let typeField = document.createElement('input');
@@ -153,6 +180,9 @@ function addTextQuestion() {
     qID++;
 }
 
+/**
+ * Adds a number question to the page
+ */
 function addNumberQuestion() {
     let div = document.createElement('div');
     let typeField = document.createElement('input');
@@ -191,6 +221,9 @@ function addNumberQuestion() {
     qID++;
 }
 
+/**
+ * Adds a single select question to the page
+ */
 function addSingleSelectQuestion() {
     let div = document.createElement('div');
     let typeField = document.createElement('input');
@@ -243,6 +276,10 @@ function addSingleSelectQuestion() {
     qID++;
 }
 
+/**
+ * Adds a Select Option to the question
+ * @param {String} id   The ID of the question
+ */
 function addSelectOption(id) {
     let questionDiv = document.getElementById('questionOptions' + id);
     let optionCount = document.getElementById('questionOptions' + id).childElementCount;
@@ -262,14 +299,21 @@ function addSelectOption(id) {
     questionDiv.appendChild(removeOptionButton);
 }
 
+/**
+ * Removes a select option from the page
+ * @param {String} questionID   The ID of the question
+ * @param {String} optionID     The ID of the option
+ */
 function removeSelectOption(questionID, optionID) {
-    let questionOptionsDiv = document.getElementById('questionOptions' + questionID);
     let optionTextBox = document.getElementById('question' + questionID + 'Option' + optionID);
     let optionButton = document.getElementById('question' + questionID + 'RemoveButton' + optionID);
     optionTextBox.parentNode.removeChild(optionTextBox);
     optionButton.parentNode.removeChild(optionButton);
 }
 
+/**
+ * Adds a multi select question to the page
+ */
 function addMultiSelectQuestion() {
     let div = document.createElement('div');
     let typeField = document.createElement('input');
@@ -322,6 +366,9 @@ function addMultiSelectQuestion() {
     qID++;
 }
 
+/**
+ * Adds functionality for collapsable navigation on mobile
+ */
 function navigationCollapse() {
     let x = document.getElementById("mainNav");
     if (x.className === "mainNav") {
@@ -331,6 +378,9 @@ function navigationCollapse() {
     }
 }
 
+/**
+ * Resets all created question elements on the page
+ */
 function resetElements(){
     document.getElementById('survey').innerHTML = '';
 }

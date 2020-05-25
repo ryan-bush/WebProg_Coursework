@@ -87,46 +87,32 @@ function createFormatted(json) {
     let submitButtonText = document.createTextNode('Create Survey');
     document.getElementById("form").appendChild(submitButton);
     submitButton.appendChild(submitButtonText);
-    submitButton.addEventListener('click', submitButtonClick);
+    submitButton.addEventListener('click', sendSurvey);
     document.getElementById("jsonForm").appendChild(a);
 }
 
-
+/**
+ * Handles the upload of a JSON file
+ */
 document.getElementById('import').onclick = function() {
     let files = document.getElementById('upJSON').files;
-    console.log(files);
     if (files.length <= 0) {
         return false;
     }
-
-    let fr = new FileReader();
+    let fReader = new FileReader();
     let formatted;
-
-    fr.onload = function(e) {
-        console.log(e);
+    fReader.onload = function(e) {
         uploadedJSON = JSON.parse(e.target.result);
-        console.log(uploadedJSON);
         formatted = JSON.stringify(uploadedJSON, null, 2);
         document.getElementById('result').value = formatted;
     };
-
-    fr.readAsText(files.item(0));
-
-    addForm(formatted);
+    fReader.readAsText(files.item(0));
 };
-function addForm(formatted) {
-    console.log(formatted.name[0]);
-}
 
-function getSurveyId() {
-    return window.location.hash.substring(1);
-}
-
-function submitButtonClick() {
-    sendSurvey();
-}
-
-/** Use fetch to post a JSON message to the server */
+/**
+ * Upload the JSON to the server
+ * @param  {Array} json  JSON array of survey
+ */
 async function sendSurvey() {
     const response = await fetch('surveys', {
         method: 'POST',
@@ -138,39 +124,44 @@ async function sendSurvey() {
 
     if (response.ok) {
         const id = await response.json();
-        console.log(id);
         createShareLink(id);
     } else {
         console.log('failed to send message', response);
     }
 }
 
+/**
+ * Create the share link HTMLon the page
+ * @param  {String} id  The ID of the created survey
+ */
 function createShareLink(id) {
-    console.log(id);
-    let a = document.createElement('section');
+    let section = document.createElement('section');
     // Show Share Title
-    let aTitle = document.createElement('h2');
-    let aTitleText = document.createTextNode("Share Link");
-    a.appendChild(aTitle);
-    aTitle.appendChild(aTitleText);
+    let title = document.createElement('h2');
+    let titleText = document.createTextNode("Share Link");
+    section.appendChild(title);
+    title.appendChild(titleText);
 
-    let b = document.createElement('input');
-    b.type = 'text';
-    b.name = 'share';
-    b.id = 'share';
-    b.value = "localhost:8080/survey#" + JSON.parse(id);
-    a.appendChild(b);
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'share';
+    input.id = 'share';
+    input.value = "localhost:8080/survey#" + JSON.parse(id);
+    section.appendChildinput;
 
-    let v = document.createElement('a');
-    v.id = 'viewSurvey';
-    v.className = 'buttonSecondary';
-    v.href = "http://localhost:8080/survey#" + JSON.parse(id);
-    let vT = document.createTextNode('View Survey');
-    a.appendChild(v);
-    v.appendChild(vT);
-    document.getElementById("share").appendChild(a);
+    let link = document.createElement('a');
+    link.id = 'viewSurvey';
+    link.className = 'buttonSecondary';
+    link.href = "http://localhost:8080/survey#" + JSON.parse(id);
+    let linkText = document.createTextNode('View Survey');
+    section.appendChild(link);
+    link.appendChild(linkText);
+    document.getElementById("share").appendChild(section);
 }
 
+/**
+ * Adds functionality for collapsable navigation on mobile
+ */
 function navigationCollapse() {
     let x = document.getElementById("mainNav");
     if (x.className === "mainNav") {
