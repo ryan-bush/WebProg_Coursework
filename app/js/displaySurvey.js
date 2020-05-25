@@ -1,5 +1,6 @@
 let obj = {};
 
+
 /**
  * Handles the retrieved survey
  * @param {Array} survey  JSON of the survey
@@ -16,7 +17,7 @@ function showSurvey(survey) {
  * @param {Array} obj     JSON of the survey entry
  */
 function addTitle(survey, obj) {
-    let title = document.createElement('h2');
+    let title = document.createElement('h1');
     let titleText = document.createTextNode(obj.name);
     title.appendChild(titleText);
 

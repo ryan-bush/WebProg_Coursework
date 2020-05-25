@@ -1,17 +1,58 @@
 let surveys = {};
 
-/**
- * Stores surveys and enables creation of tableelements
- */
-function showAllSurveys() {
-    surveys = JSON.parse(surveys);
-    showTable()
+
+// Pagination
+
+let list = [];
+let pageList = [];
+let currentPage = 1;
+let numberPerPage = 5;
+let numberOfPages = 0;
+
+function getNumberOfPages() {
+    return Math.ceil(list.length / numberPerPage);
 }
 
-/**
- * Creates HTML for survey table
- */
-async function showTable() {
+function nextPage() {
+    currentPage += 1;
+    let table = document.getElementById('surveyTable');
+    table.parentNode.removeChild(table);
+    loadList();
+}
+
+function previousPage() {
+    currentPage -= 1;
+    let table = document.getElementById('surveyTable');
+    table.parentNode.removeChild(table);
+    loadList();
+}
+
+function firstPage() {
+    currentPage = 1;
+    let table = document.getElementById('surveyTable');
+    table.parentNode.removeChild(table);
+    loadList();
+}
+
+function lastPage() {
+    currentPage = numberOfPages;
+    let table = document.getElementById('surveyTable');
+    table.parentNode.removeChild(table);
+    loadList();
+}
+
+function loadList() {
+    let begin = ((currentPage - 1) * numberPerPage);
+    let end = begin + numberPerPage;
+    console.log(list);
+    numberOfPages = getNumberOfPages();
+    console.log(numberOfPages);
+    pageList = list.slice(begin, end);
+    drawList();
+    check();
+}
+
+async function drawList() {
     let surveyElement = document.getElementById('surveys');
     let loading = document.createElement('p');
     loading.id = 'loadingText';
@@ -20,6 +61,7 @@ async function showTable() {
     surveyElement.appendChild(loading);
 
     let table = document.createElement('table');
+    table.id = "surveyTable";
     let tableHead = document.createElement('thead');
     let tableBody = document.createElement('tbody');
     let tableHeadingRow = document.createElement('tr');
@@ -58,8 +100,10 @@ async function showTable() {
     tableHeading5.appendChild(tableHeadingText5);
     tableHeading6.appendChild(tableHeadingText6);
     table.appendChild(tableBody);
-
-    for (let i = 0; i < surveys.length; i++) {
+    console.log("draw list");
+    for (let i = 0; i < pageList.length; i++) {
+        let obj = pageList[i];
+        console.log(pageList);
         let tableBodyRow = document.createElement('tr');
         let tableData1 = document.createElement('td');
         tableData1.classList = 'tableColumn1';
@@ -73,17 +117,17 @@ async function showTable() {
         tableData5.classList = 'tableColumn5';
         let tableData6 = document.createElement('td');
         tableData6.classList = 'tableColumn6';
-        let tableDataText1 = document.createTextNode(surveys[i].id);
-        let name = await getSurveyName(surveys[i].id);
+        let tableDataText1 = document.createTextNode(obj.id);
+        let name = await getSurveyName(obj.id);
         let tableDataText2 = document.createTextNode(name);
         let tableDataText3 = document.createElement("a");
         let tableDataTextNode3 = document.createTextNode("View Survey");
-        tableDataTextNode3.href = "survey#" + surveys[i].id;
+        tableDataText3.href = "survey#" + surveys[i].id;
         let tableDataText4 = document.createElement("a");
         let tableDataTextNode4 = document.createTextNode("View Responses");
-        tableDataTextNode4.href = "results#" + surveys[i].id;
-        let tableDataText5 = document.createTextNode(await getSurveyResponses(surveys[i].id));
-        let tableDataText6 = document.createTextNode(surveys[i].time);
+        tableDataText4.href = "results#" + surveys[i].id;
+        let tableDataText5 = document.createTextNode(await getSurveyResponses(obj.id));
+        let tableDataText6 = document.createTextNode(obj.time);
         tableBody.appendChild(tableBodyRow);
         tableBodyRow.appendChild(tableData1);
         tableBodyRow.appendChild(tableData2);
@@ -102,6 +146,21 @@ async function showTable() {
     }
     loading.parentNode.removeChild(loading);
     surveyElement.appendChild(table);
+}
+
+function check() {
+    document.getElementById("next").disabled = currentPage == numberOfPages ? true : false;
+    document.getElementById("previous").disabled = currentPage == 1 ? true : false;
+    document.getElementById("first").disabled = currentPage == 1 ? true : false;
+    document.getElementById("last").disabled = currentPage == numberOfPages ? true : false;
+}
+
+/**
+ * Stores surveys and enables creation of tableelements
+ */
+function showAllSurveys() {
+    surveys = JSON.parse(surveys);
+    //showTable()
 }
 
 /**
@@ -149,6 +208,8 @@ async function loadAllSurveys() {
     } else {
         surveys = {msg: 'failed to load survey :-('};
     }
+    list = JSON.parse(surveys);
+    loadList();
     showAllSurveys();
 }
 

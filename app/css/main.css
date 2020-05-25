@@ -244,6 +244,10 @@ input {
   font-size: 16px;
 }
 
+.paginate {
+  width: 10%;
+}
+
 .surveyTypeInput {
   width: 10%;
 }
@@ -290,7 +294,6 @@ select {
 }
 
 .surveyTable {
-  min-height: 100vh;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
