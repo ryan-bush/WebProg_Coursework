@@ -88,7 +88,7 @@ function createFormatted(json) {
     document.getElementById("form").appendChild(submitButton);
     submitButton.appendChild(submitButtonText);
     submitButton.addEventListener('click', sendSurvey);
-    document.getElementById("jsonForm").appendChild(a);
+    document.getElementById("jsonForm").appendChild(section);
 }
 
 /**
@@ -142,17 +142,17 @@ function createShareLink(id) {
     section.appendChild(title);
     title.appendChild(titleText);
 
-    let input = document.createElement('input');
-    input.type = 'text';
-    input.name = 'share';
-    input.id = 'share';
-    input.value = "localhost:8080/survey#" + JSON.parse(id);
-    section.appendChildinput;
+    // let input = document.createElement('input');
+    // input.type = 'text';
+    // input.name = 'share';
+    // input.id = 'share';
+    // input.value = "localhost:8080/survey#" + JSON.parse(id);
+    // section.appendChild(input);
 
     let link = document.createElement('a');
     link.id = 'viewSurvey';
     link.className = 'buttonSecondary';
-    link.href = "http://localhost:8080/survey#" + JSON.parse(id);
+    link.href = "/survey#" + JSON.parse(id);
     let linkText = document.createTextNode('View Survey');
     section.appendChild(link);
     link.appendChild(linkText);

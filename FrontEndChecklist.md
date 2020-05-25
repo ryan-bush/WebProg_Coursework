@@ -64,7 +64,7 @@ Some resources possess an emoticon to help you understand which type of content 
 
 ### Meta tag
 
-* [ ] **Doctype:** ![High][high_img] The Doctype is HTML5 and is at the top of all your HTML pages.
+* [x] **Doctype:** ![High][high_img] The Doctype is HTML5 and is at the top of all your HTML pages.
 
 ```html
 <!doctype html> <!-- HTML5 -->
@@ -74,21 +74,21 @@ Some resources possess an emoticon to help you understand which type of content 
 
 *The next 2 meta tags (Charset and Viewport) need to come first in the head.*
 
-* [ ] **Charset:** ![High][high_img] The charset (UTF-8) is declared correctly.
+* [x] **Charset:** ![High][high_img] The charset (UTF-8) is declared correctly.
 
 ```html
 <!-- Set character encoding for the document -->
 <meta charset="utf-8">
 ```
 
-* [ ] **Viewport:** ![High][high_img] The viewport is declared correctly.
+* [x] **Viewport:** ![High][high_img] The viewport is declared correctly.
 
 ```html
 <!-- Viewport for responsive web design -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 ```
 
-* [ ] **Title:** ![High][high_img] A title is used on all pages (SEO: Google calculates the pixel width of the characters used in the title, and it cuts off between 472 and 482 pixels. The average character limit would be around 55-characters).
+* [x] **Title:** ![High][high_img] A title is used on all pages (SEO: Google calculates the pixel width of the characters used in the title, and it cuts off between 472 and 482 pixels. The average character limit would be around 55-characters).
 
 ```html
 <!-- Document Title -->
@@ -98,7 +98,7 @@ Some resources possess an emoticon to help you understand which type of content 
 > * 📖 [Title - HTML - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title)
 > * 🛠 [SERP Snippet Generator](https://www.sistrix.com/serp-snippet-generator/)
 
-* [ ] **Description:** ![High][high_img] A meta description is provided, it is unique and doesn't possess more than 150 characters.
+* [x] **Description:** ![High][high_img] A meta description is provided, it is unique and doesn't possess more than 150 characters.
 
 ```html
 <!-- Meta Description -->
@@ -176,13 +176,13 @@ Minimum required xml markup for the `browserconfig.xml` file is as follows:
 
 ### HTML tags
 
-* [ ] **Language attribute:** ![High][high_img] The `lang` attribute of your website is specified and related to the language of the current page.
+* [x] **Language attribute:** ![High][high_img] The `lang` attribute of your website is specified and related to the language of the current page.
 
 ```html
 <html lang="en">
 ```
 
-* [ ] **Direction attribute:** ![Medium][medium_img] The direction of lecture is specified on the html tag (It can be used on another HTML tag).
+* [x] **Direction attribute:** ![Medium][medium_img] The direction of lecture is specified on the html tag (It can be used on another HTML tag).
 
 ```html
 <html dir="rtl">
@@ -211,11 +211,11 @@ Minimum required xml markup for the `browserconfig.xml` file is as follows:
 
 * [ ] **RSS feed:** ![Low][low_img] If your project is a blog or has articles, an RSS link was provided.
 
-* [ ] **CSS Critical:** ![Medium][medium_img] The CSS critical (or "above the fold") collects all the CSS used to render the visible portion of the page. It is embedded before your principal CSS call and between `<style></style>` in a single line (minified).
+* [x] **CSS Critical:** ![Medium][medium_img] The CSS critical (or "above the fold") collects all the CSS used to render the visible portion of the page. It is embedded before your principal CSS call and between `<style></style>` in a single line (minified).
 
 > * 🛠 [Critical by Addy Osmani on GitHub](https://github.com/addyosmani/critical) automates this.
 
-* [ ] **CSS order:** ![High][high_img] All CSS files are loaded before any JavaScript files in the `<head>`. (Except the case where sometimes JS files are loaded asynchronously on top of your page).
+* [x] **CSS order:** ![High][high_img] All CSS files are loaded before any JavaScript files in the `<head>`. (Except the case where sometimes JS files are loaded asynchronously on top of your page).
 
 ### Social meta
 
@@ -267,7 +267,7 @@ Visualize and generate automatically our social meta tags with [Meta Tags](https
 
 ### Best practices
 
-* [ ] **HTML5 Semantic Elements:** ![High][high_img] HTML5 Semantic Elements are used appropriately (header, section, footer, main...).
+* [x] **HTML5 Semantic Elements:** ![High][high_img] HTML5 Semantic Elements are used appropriately (header, section, footer, main...).
 
 > * 📖 [HTML Reference](http://htmlreference.io/)
 
@@ -309,16 +309,16 @@ Visualize and generate automatically our social meta tags with [Meta Tags](https
 > **Notes:** Using web fonts may cause Flash Of Unstyled Text/Flash Of Invisible Text - consider having fallback fonts and/or utilizing web font loaders to control behavior.
 > * 📖 [Google Technical considerations about webfonts](https://developers.google.com/fonts/docs/technical_considerations)
 
-* [ ] **Webfont format:** ![High][high_img] WOFF, WOFF2 and TTF are supported by all modern browsers.
+* [x] **Webfont format:** ![High][high_img] WOFF, WOFF2 and TTF are supported by all modern browsers.
 
 > * 📖 [WOFF - Web Open Font Format - Caniuse](https://caniuse.com/#feat=woff).
 > * 📖 [WOFF 2.0 - Web Open Font Format - Caniuse](https://caniuse.com/#feat=woff2).
 > * 📖 [TTF/OTF - TrueType and OpenType font support](https://caniuse.com/#feat=ttf)
 > * 📖 [Using @font-face - CSS-Tricks](https://css-tricks.com/snippets/css/using-font-face/)
 
-* [ ] **Webfont size:** ![High][high_img] Webfont sizes don't exceed 2 MB (all variants included).
+* [x] **Webfont size:** ![High][high_img] Webfont sizes don't exceed 2 MB (all variants included).
 
-* [ ] **Webfont loader:** ![Low][low_img] Control loading behavior with a webfont loader
+* [x] **Webfont loader:** ![Low][low_img] Control loading behavior with a webfont loader
 
 > * 🛠 [Typekit Web Font Loader](https://github.com/typekit/webfontloader)
 
@@ -330,10 +330,10 @@ Visualize and generate automatically our social meta tags with [Meta Tags](https
 
 > **Notes:** Take a look at [CSS guidelines](https://cssguidelin.es/) and [Sass Guidelines](https://sass-guidelin.es/) followed by most  Front-End developers. If you have a doubt about CSS properties, you can visit [CSS Reference](http://cssreference.io/). There is also a short [Code Guide](http://codeguide.co/) for consistency.
 
-* [ ] **Responsive Web Design:** ![High][high_img] The website is using responsive web design.
+* [x] **Responsive Web Design:** ![High][high_img] The website is using responsive web design.
 * [ ] **CSS Print:** ![Medium][medium_img] A print stylesheet is provided and is correct on each page.
-* [ ] **Preprocessors:** ![Low][low_img] Your project is using a CSS preprocessor (e.g [Sass](http://sass-lang.com/), [Less](http://lesscss.org/), [Stylus](http://stylus-lang.com/)).
-* [ ] **Unique ID:** ![High][high_img] If IDs are used, they are unique to a page.
+* [x] **Preprocessors:** ![Low][low_img] Your project is using a CSS preprocessor (e.g [Sass](http://sass-lang.com/), [Less](http://lesscss.org/), [Stylus](http://stylus-lang.com/)).
+* [x] **Unique ID:** ![High][high_img] If IDs are used, they are unique to a page.
 * [ ] **Reset CSS:** ![High][high_img] A CSS reset (reset, normalize or reboot) is used and up to date. *(If you are using a CSS Framework like Bootstrap or Foundation, a Normalize is already included into it.)*
 
 > * 📖 [Reset.css](https://meyerweb.com/eric/tools/css/reset/)
@@ -348,21 +348,21 @@ Visualize and generate automatically our social meta tags with [Meta Tags](https
 <div id="id-used-by-cms" class="js-slider my-slider">
 ```
 
-* [ ] **embedded or inline CSS:** ![High][high_img] Avoid at all cost embedding CSS in `<style>` tags or using inline CSS: only use for valid reasons (e.g. background-image for slider, critical CSS).
+* [x] **embedded or inline CSS:** ![High][high_img] Avoid at all cost embedding CSS in `<style>` tags or using inline CSS: only use for valid reasons (e.g. background-image for slider, critical CSS).
 * [ ] **Vendor prefixes:** ![High][high_img] CSS vendor prefixes are used and are generated accordingly with your browser support compatibility.
 
 > * 🛠 [Autoprefixer CSS online](https://autoprefixer.github.io/)
 
 ### Performance
 
-- [ ] **Concatenation:** ![High][high_img] CSS files are concatenated in a single file *(Not for HTTP/2)*.
+- [x] **Concatenation:** ![High][high_img] CSS files are concatenated in a single file *(Not for HTTP/2)*.
 - [ ] **Minification:** ![High][high_img] All CSS files are minified.
 - [ ] **Non-blocking:** ![Medium][medium_img] CSS files need to be non-blocking to prevent the DOM from taking time to load.
 
 > * 📖 [loadCSS by filament group](https://github.com/filamentgroup/loadCSS)
 > * 📖 [Example of preload CSS using loadCSS](https://gist.github.com/thedaviddias/c24763b82b9991e53928e66a0bafc9bf)
 
-- [ ] **Unused CSS:** ![Low][low_img] Remove unused CSS.
+- [x] **Unused CSS:** ![Low][low_img] Remove unused CSS.
 
 > * 🛠 [UnCSS Online](https://uncss-online.com/)
 > * 🛠 [PurifyCSS](https://github.com/purifycss/purifycss)
@@ -377,7 +377,7 @@ Visualize and generate automatically our social meta tags with [Meta Tags](https
 > * 🛠 [stylelint, a CSS linter](https://stylelint.io/)
 > * 📖 [Sass guidelines](https://sass-guidelin.es/)
 
-* [ ] **Responsive web design:** ![High][high_img] All pages were tested at the following breakpoints: 320px, 768px, 1024px (can be more / different according to your analytics).
+* [x] **Responsive web design:** ![High][high_img] All pages were tested at the following breakpoints: 320px, 768px, 1024px (can be more / different according to your analytics).
 
 * [ ] **CSS Validator:** ![Medium][medium_img] The CSS was tested and pertinent errors were corrected.
 
@@ -406,7 +406,7 @@ Visualize and generate automatically our social meta tags with [Meta Tags](https
 
 ### Best practices
 
-* [ ] **Optimization:** ![High][high_img] All images are optimized to be rendered in the browser. WebP format could be used for critical pages (like Homepage).
+* [x] **Optimization:** ![High][high_img] All images are optimized to be rendered in the browser. WebP format could be used for critical pages (like Homepage).
 
 > * 🛠 [Imagemin](https://github.com/imagemin/imagemin)
 > * 🛠 Use [ImageOptim](https://imageoptim.com/) to optimise your images for free.
@@ -418,18 +418,18 @@ Visualize and generate automatically our social meta tags with [Meta Tags](https
 > * 🛠 [SVGOMG](https://jakearchibald.github.io/svgomg/) a web-based GUI version of SVGO for optimising your svgs online.
 
 
-* [ ] **Picture/Srcset:** ![Medium][medium_img] You use picture/srcset to provide the most appropriate image for the current viewport of the user.
+* [x] **Picture/Srcset:** ![Medium][medium_img] You use picture/srcset to provide the most appropriate image for the current viewport of the user.
 
 > * 📖 [How to Build Responsive Images with srcset](https://www.sitepoint.com/how-to-build-responsive-images-with-srcset/)
 
-* [ ] **Retina:** ![Low][low_img] You provide layout images 2x or 3x, support retina display.
-* [ ] **Sprite:** ![Medium][medium_img] Small images are in a sprite file (in the case of icons, they can be in an SVG sprite image).
-* [ ] **Width and Height:** ![High][high_img] Set `width` and `height` attributes on `<img>` if the final rendered image size is known (can be omitted for CSS sizing).
-* [ ] **Alternative text:** ![High][high_img] All `<img>` have an alternative text which describes the image visually.
+* [x] **Retina:** ![Low][low_img] You provide layout images 2x or 3x, support retina display.
+* [x] **Sprite:** ![Medium][medium_img] Small images are in a sprite file (in the case of icons, they can be in an SVG sprite image).
+* [x] **Width and Height:** ![High][high_img] Set `width` and `height` attributes on `<img>` if the final rendered image size is known (can be omitted for CSS sizing).
+* [x] **Alternative text:** ![High][high_img] All `<img>` have an alternative text which describes the image visually.
 
 > * 📖 [Alt-texts: The Ultimate Guide](https://axesslab.com/alt-texts/)
 
-* [ ] **Lazy loading:** ![Medium][medium_img] Images are lazyloaded (A noscript fallback is always provided).
+* [x] **Lazy loading:** ![Medium][medium_img] Images are lazyloaded (A noscript fallback is always provided).
 
 **[⬆ back to top](#table-of-contents)**
 
