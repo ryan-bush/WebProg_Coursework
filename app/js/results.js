@@ -1,38 +1,90 @@
-let obj = {};
-let mainSurvey = {};
-let mainSurveyQuestions = {};
-let responses = [];
-let sortedResponses = {};
-let chartColours = ['#ff6385', '#36a3eb', '#ffcf56', '#4bc0c0', '#ff4040', '#ffa940', '#5040ff', '#40ff63',
-    '#9966ff', '#ffa040', '#ff40a3', '#4063ff', '#dfff40'];
-const capitalize = (s) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
+let mainSurvey = {}; // For the main survey data
+let mainSurveyQuestions = {}; // For the main survey questions
+let responses = []; // For all Responses
+let sortedResponses = {}; // For Responses sorted by name
+let subtleColours = ['#C6E2E9', '#BBD1EA', '#7286A0', '#4A6670',
+    '#B8D4E3', '#666A86', '#6EB4D1', '#AED4E6',
+    '#FEF6C9', '#FFCAAF', '#DAB894', '#BE6E46',
+    '#56494C', '#918868', '#F0A868', '#FFC09F',
+    '#C3E8BD', '#9DDBAD', '#A0AF84', '#668F80',
+    '#DCEDB9', '#D2E59E', '#CBD081', '#6A8D73',
+    '#D3C0D2', '#D6A2AD', '#67597A', '#544E61',
+    '#855A5C', '#C57B57', '#F7DBA7', '#F9B9B7',
+];
+
+/**
+ * Capitalize the first letter of a string
+ * @param  {String} string  The string to capitalize
+ * @return {String}         The string with the first letter as a capital
+ */
+const capitalize = (string) => {
+    if (typeof string !== 'string') return ''
+    return string.charAt(0).toUpperCase() + string.slice(1)
 }
-const randomColour = (j) => {
+
+/**
+ * Returns an array of random colours based on a length
+ * @param  {Number} numOfColours  The number of colours to return
+ * @return {Array}               An array of colours
+ */
+const randomColour = (numOfColours) => {
     let colours = [];
-    for(let i = 0; i < j; i++) {
-        colours.push(chartColours[Math.floor(Math.random() * chartColours.length)]);
+    let lastNumber = 0;
+    for(let i = 0; i < numOfColours; i++) {
+        let random = getRandomIntInclusive(0, subtleColours.length -1);
+        if (lastNumber == random) {
+            random = getRandomIntInclusive(0, subtleColours.length -1);
+            lastNumber = random;
+        }
+        lastNumber = random;
+        console.log(random);
+        colours.push(subtleColours[random]);
     }
     return colours;
 }
 
+/**
+ * Returns a random integer
+ * @param  {Number} min  The lowest number
+ * @param  {Number} max  The highest number
+ * @return {Number}      A random integer between min and max
+ */
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+}
+
+/**
+ * Returns the survey ID from the hash substring
+ * @return {String}          The Survey ID
+ */
 function getSurveyId() {
     return window.location.hash.substring(1);
 }
 
+/**
+ * Handles the generation of the page
+ * @param  {Object} res         An array of all responses for the survey
+ * @param  {String} resName     The survey name
+ * @param  {Object} resSurvey   An array of the survey data
+ */
 function showResults(res, resName, resSurvey) {
-    obj = res;
     mainSurvey = resSurvey;
     mainSurveyQuestions = JSON.parse(resSurvey.json);
     mainSurveyQuestions = mainSurveyQuestions.questions;
-    addTitle(res, resName, obj);
-    mergeResults(obj);
+    addTitle(res, resName);
+    mergeResults(res);
     orderResults(responses);
     createDownloadLink();
     showResponses();
 }
 
+/**
+ * Gets a full question from the  question id
+ * @param  {String} name  The ID of the question
+ * @return {String}       The whole question
+ */
 function getQuestionFromName(name) {
     for (let i = 0; i < mainSurveyQuestions.length; i++) {
         if (mainSurveyQuestions[i].id === name) {
@@ -41,48 +93,57 @@ function getQuestionFromName(name) {
     }
 }
 
+/**
+ * Generates the HTML code for each question in the survey
+ */
 function showResponses() {
     for (let i in sortedResponses) {
-        let d = document.createElement('div');
-        d.id = 'responses' + i;
-        document.getElementById("results").appendChild(d);
+        // Generate Response Section
+        let responseSection = document.createElement('section');
+        responseSection.id = 'responses' + i;
+        document.getElementById("results").appendChild(responseSection);
 
-        let a = occurrencesInArray(sortedResponses[i])
+        // Organised Responses
+        let organisedResponses = occurrencesInArray(sortedResponses[i])
 
-        let t = document.createElement('h3');
-        let tT = document.createTextNode(capitalize(i));
-        t.appendChild(tT);
+        // Generate Response Table Heading HTML
+        let heading = document.createElement('h3');
+        let headingText = document.createTextNode(capitalize(i));
+        heading.appendChild(headingText);
 
-        let table = document.createElement('table');
-        let tR = document.createElement('tr');
-        let tH1 = document.createElement('th');
-        let tH2 = document.createElement('th');
-        let tH11 = document.createTextNode('Response');
-        let tH21 = document.createTextNode('Total');
+        // Generate Response Table HTML
+        let responseTable = document.createElement('table');
+        let tableHeadingRow = document.createElement('tr');
+        let tableHeadingRow1 = document.createElement('th');
+        let tableHeadingRow2 = document.createElement('th');
+        let tableHeadingText1 = document.createTextNode('Response');
+        let tableHeadingText2 = document.createTextNode('Total');
 
-        table.appendChild(tR);
-        tR.appendChild(tH1);
-        tR.appendChild(tH2);
-        tH1.appendChild(tH11);
-        tH2.appendChild(tH21);
+        responseTable.appendChild(tableHeadingRow);
+        tableHeadingRow.appendChild(tableHeadingRow1);
+        tableHeadingRow.appendChild(tableHeadingRow2);
+        tableHeadingRow1.appendChild(tableHeadingText1);
+        tableHeadingRow2.appendChild(tableHeadingText2);
 
-        for (j in a[0]) {
-            let tRow = document.createElement('tr');
-            let tD1 = document.createElement('td');
-            let tD2 = document.createElement('td');
-            let tD11 = document.createTextNode(a[0][j]);
-            let tD21 = document.createTextNode(a[1][j]);
-            table.appendChild(tRow);
-            tRow.appendChild(tD1);
-            tRow.appendChild(tD2);
-            tD1.appendChild(tD11);
-            tD2.appendChild(tD21);
+        // Loop through all organised responses
+        for (j in organisedResponses[0]) {
+            let tableBodyRow = document.createElement('tr');
+            let tableRow1 = document.createElement('td');
+            let tableRow2 = document.createElement('td');
+            let tableRowText1 = document.createTextNode(organisedResponses[0][j]);
+            let tableRowText2 = document.createTextNode(organisedResponses[1][j]);
+            responseTable.appendChild(tableBodyRow);
+            tableBodyRow.appendChild(tableRow1);
+            tableBodyRow.appendChild(tableRow2);
+            tableRow1.appendChild(tableRowText1);
+            tableRow2.appendChild(tableRowText2);
         }
 
-        d.appendChild(t);
-        d.appendChild(table);
+        responseSection.appendChild(heading);
+        responseSection.appendChild(responseTable);
 
-        let chartButtons = document.createElement('div');
+        // Generate Chart Toggle Buttons HTML
+        let chartButtons = document.createElement('section');
         chartButtons.id = "chartButtons";
         // Bar Chart
         let chartButtonBar = document.createElement('button');
@@ -113,26 +174,27 @@ function showResponses() {
         chartButtons.appendChild(chartButtonDonut);
         chartButtonDonut.appendChild(chartButtonDonutText);
 
-        d.appendChild(chartButtons);
+        responseSection.appendChild(chartButtons);
 
-        chartButtonBar.addEventListener("click", function(){ showBarChart(i, a[0], a[1]); });
-        chartButtonHorBar.addEventListener("click", function(){ showHorizontalBarChart(i, a[0], a[1]); });
-        chartButtonPie.addEventListener("click", function(){ showPieChart(i, a[0], a[1]); });
-        chartButtonDonut.addEventListener("click", function(){ showDonutChart(i, a[0], a[1]); });
+        chartButtonBar.addEventListener("click", function(){ showBarChart(i, organisedResponses[0], organisedResponses[1]); });
+        chartButtonHorBar.addEventListener("click", function(){ showHorizontalBarChart(i, organisedResponses[0], organisedResponses[1]); });
+        chartButtonPie.addEventListener("click", function(){ showPieChart(i, organisedResponses[0], organisedResponses[1]); });
+        chartButtonDonut.addEventListener("click", function(){ showDonutChart(i, organisedResponses[0], organisedResponses[1]); });
 
-        let x = document.createElement('canvas');
-        x.id = 'chartResponse' + i;
-        d.appendChild(x);
+        // Generate Chart Canvas HTML
+        let canvas = document.createElement('canvas');
+        canvas.id = 'chartResponse' + i;
+        responseSection.appendChild(canvas);
 
         // Create Chart
-        let myChart = new Chart(x, {
+        let myChart = new Chart(canvas, {
             type: 'pie',
             data: {
-                labels: a[0],
+                labels: organisedResponses[0],
                 datasets: [{
                     label: '# of Votes',
-                    data: a[1],
-                    backgroundColor: randomColour(a[0].length),
+                    data: organisedResponses[1],
+                    backgroundColor: randomColour(organisedResponses[0].length),
                     borderWidth: 1
                 }]
             },
@@ -141,29 +203,38 @@ function showResponses() {
                 title: {
                     display: true,
                     text: 'Responses for ' + getQuestionFromName(i)
-                    // text: 'Responses for ' + mainSurveyQuestions[i].name
                 },
             }
         });
     }
 }
 
-function showBarChart(i, a, b) {
-    let response = document.getElementById('responses' + i);
-    let chart = document.getElementById('chartResponse' + i);
+/**
+ * Changes generated chart for response into bar chart
+ * @param  {String} name                The ID of the question
+ * @param  {Array} responseAnswers      Answers for the question
+ * @param  {Array} responseOccurrences  Occurrences of each response
+ */
+function showBarChart(name, responseAnswers, responseOccurrences) {
+    // Remove existing chart from response
+    let response = document.getElementById('responses' + name);
+    let chart = document.getElementById('chartResponse' + name);
     chart.parentNode.removeChild(chart);
 
-    let x = document.createElement('canvas');
-    x.id = 'chartResponse' + i;
-    response.appendChild(x);
-    let myChart = new Chart(x, {
+    // Generate Chart Canvas HTML
+    let canvas = document.createElement('canvas');
+    canvas.id = 'chartResponse' + name;
+    response.appendChild(canvas);
+
+    // Create Chart
+    let myChart = new Chart(canvas, {
         type: 'bar',
         data: {
-            labels: a,
+            labels: responseAnswers,
             datasets: [{
                 label: '# of Responses',
-                data: b,
-                backgroundColor: chartColours,
+                data: responseOccurrences,
+                backgroundColor: randomColour(responseAnswers.length),
                 borderWidth: 1,
                 scaleStartValue: 0
             }]
@@ -172,7 +243,7 @@ function showBarChart(i, a, b) {
             responsive:true,
             title: {
                 display: true,
-                text: 'Responses for ' + capitalize(i)
+                text: 'Responses for ' + getQuestionFromName(name)
             },
             scales: {
                 yAxes: [{
@@ -185,22 +256,32 @@ function showBarChart(i, a, b) {
     });
 }
 
-function showHorizontalBarChart(i, a, b) {
-    let response = document.getElementById('responses' + i);
-    let chart = document.getElementById('chartResponse' + i);
+/**
+ * Changes generated chart for response into horizontal bar chart
+ * @param  {String} name                The ID of the question
+ * @param  {Array} responseAnswers      Answers for the question
+ * @param  {Array} responseOccurrences  Occurrences of each response
+ */
+function showHorizontalBarChart(name, responseAnswers, responseOccurrences) {
+    // Remove existing chart from response
+    let response = document.getElementById('responses' + name);
+    let chart = document.getElementById('chartResponse' + name);
     chart.parentNode.removeChild(chart);
 
-    let x = document.createElement('canvas');
-    x.id = 'chartResponse' + i;
-    response.appendChild(x);
-    let myChart = new Chart(x, {
+    // Generate Chart Canvas HTML
+    let canvas = document.createElement('canvas');
+    canvas.id = 'chartResponse' + name;
+    response.appendChild(canvas);
+
+    // Create Chart
+    let myChart = new Chart(canvas, {
         type: 'horizontalBar',
         data: {
-            labels: a,
+            labels: responseAnswers,
             datasets: [{
                 label: '# of Responses',
-                data: b,
-                backgroundColor: chartColours,
+                data: responseOccurrences,
+                backgroundColor: randomColour(responseAnswers.length),
                 borderWidth: 1,
                 scaleStartValue: 0
             }]
@@ -209,7 +290,7 @@ function showHorizontalBarChart(i, a, b) {
             responsive:true,
             title: {
                 display: true,
-                text: 'Responses for ' + capitalize(i)
+                text: 'Responses for ' + getQuestionFromName(name)
             },
             scales: {
                 xAxes: [{
@@ -222,22 +303,32 @@ function showHorizontalBarChart(i, a, b) {
     });
 }
 
-function showPieChart(i, a, b) {
-    let response = document.getElementById('responses' + i);
-    let chart = document.getElementById('chartResponse' + i);
+/**
+ * Changes generated chart for response into pie chart
+ * @param  {String} name                The ID of the question
+ * @param  {Array} responseAnswers      Answers for the question
+ * @param  {Array} responseOccurrences  Occurrences of each response
+ */
+function showPieChart(name, responseAnswers, responseOccurrences) {
+    // Remove existing chart from response
+    let response = document.getElementById('responses' + name);
+    let chart = document.getElementById('chartResponse' + name);
     chart.parentNode.removeChild(chart);
 
-    let x = document.createElement('canvas');
-    x.id = 'chartResponse' + i;
-    response.appendChild(x);
-    let myChart = new Chart(x, {
+    // Generate Chart Canvas HTML
+    let canvas = document.createElement('canvas');
+    canvas.id = 'chartResponse' + name;
+    response.appendChild(canvas);
+
+    // Create Chart
+    let myChart = new Chart(canvas, {
         type: 'pie',
         data: {
-            labels: a,
+            labels: responseAnswers,
             datasets: [{
                 label: '# of Responses',
-                data: b,
-                backgroundColor: chartColours,
+                data: responseOccurrences,
+                backgroundColor: randomColour(responseAnswers.length),
                 borderWidth: 1
             }]
         },
@@ -245,28 +336,38 @@ function showPieChart(i, a, b) {
             responsive:true,
             title: {
                 display: true,
-                text: 'Responses for ' + capitalize(i)
+                text: 'Responses for ' + getQuestionFromName(name)
             },
         }
     });
 }
 
-function showDonutChart(i, a, b) {
-    let response = document.getElementById('responses' + i);
-    let chart = document.getElementById('chartResponse' + i);
+/**
+ * Changes generated chart for response into donut chart
+ * @param  {String} name                The ID of the question
+ * @param  {Array} responseAnswers      Answers for the question
+ * @param  {Array} responseOccurrences  Occurrences of each response
+ */
+function showDonutChart(name, responseAnswers, responseOccurrences) {
+    // Remove existing chart from response
+    let response = document.getElementById('responses' + name);
+    let chart = document.getElementById('chartResponse' + name);
     chart.parentNode.removeChild(chart);
 
-    let x = document.createElement('canvas');
-    x.id = 'chartResponse' + i;
-    response.appendChild(x);
-    let myChart = new Chart(x, {
+    // Generate Chart Canvas HTML
+    let canvas = document.createElement('canvas');
+    canvas.id = 'chartResponse' + name;
+    response.appendChild(canvas);
+
+    // Create Chart
+    let myChart = new Chart(canvas, {
         type: 'doughnut',
         data: {
-            labels: a,
+            labels: responseAnswers,
             datasets: [{
                 label: '# of Responses',
-                data: b,
-                backgroundColor: chartColours,
+                data: responseOccurrences,
+                backgroundColor: randomColour(responseAnswers.length),
                 borderWidth: 1
             }]
         },
@@ -274,49 +375,56 @@ function showDonutChart(i, a, b) {
             responsive:true,
             title: {
                 display: true,
-                text: 'Responses for ' + capitalize(i)
+                text: 'Responses for ' + getQuestionFromName(name)
             },
         }
     });
 }
 
+/**
+ * Creates the Download HTML for the responses
+ */
 function createDownloadLink() {
     let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sortedResponses,null,2));
 
+    // Create HTML Download link
     let a = document.createElement('a');
     a.classList = 'buttonSecondary';
     a.href = 'data:' + data;
     a.download = 'data.json';
     a.innerHTML = 'Download JSON';
 
+    //Generates it onto the page
     let container = document.getElementById('download');
     container.appendChild(a);
 }
 
-function drawCharts() {
-    for(let i in sortedResponses) {
-        // Create Chart Canvas
-
-    }
-}
-
-function occurrencesInArray(arr) {
+/**
+ * Returns two arrays of results and occurrences of results
+ * @param  {Array} responses  The array of each response
+ * @return {Array}            An array of results
+ * @return {Array}            An array of occurrences of results
+ */
+function occurrencesInArray(responses) {
     let a = [], b = [], prev;
 
-    arr.sort();
-    for ( var i = 0; i < arr.length; i++ ) {
-        if ( arr[i] !== prev ) {
-            a.push(arr[i]);
+    responses.sort();
+    for (let i = 0; i < responses.length; i++ ) {
+        if ( responses[i] !== prev ) {
+            a.push(responses[i]);
             b.push(1);
         } else {
             b[b.length-1]++;
         }
-        prev = arr[i];
+        prev = responses[i];
     }
-
     return [a, b];
 }
 
+/**
+ * Orders the results into a sorted array
+ * @param  {Array} res  The array of each response
+ */
 function orderResults(res) {
     res = JSON.parse(res);
     for (let i = 0; i < res.length; i++) {
@@ -328,6 +436,10 @@ function orderResults(res) {
     }
 }
 
+/**
+ * Orders the results into a sorted array
+ * @param  {Array} res  The array of each response
+ */
 function mergeResults(res) {
     for (let i = 0; i < res.length; i++) {
         let iRes = JSON.parse(res[i].json);
@@ -336,33 +448,39 @@ function mergeResults(res) {
         }
     }
     // Display on Page
-    let a = document.createElement('p');
-    // let aA = document.createTextNode(JSON.stringify(responses));
-    // a.appendChild(aA);
-    let r = document.createTextNode('Total Responses: ' + res.length);
-    a.appendChild(r);
-    document.getElementById("results").appendChild(a);
+    let totalResponses = document.createElement('p');
+    let totalResponsesText = document.createTextNode('Total Responses: ' + res.length);
+    totalResponses.appendChild(totalResponsesText);
+    document.getElementById("results").appendChild(totalResponses);
     responses = JSON.stringify(responses);
 }
 
-function addTitle(res, resName, obj) {
-    let t = document.createElement('h2');
-    let tT = document.createTextNode(resName);
-    t.appendChild(tT);
+/**
+ * Adds Title, ID and Date to page
+ * @param  {Array}  res         The array of each response
+ * @param  {String} resName     The Survey name
+ */
+function addTitle(res, resName) {
+    let heading = document.createElement('h2');
+    let headingText = document.createTextNode(resName);
+    heading.appendChild(headingText);
 
-    let s = document.createElement('small');
-    let sT = document.createTextNode("Survey Time: " + mainSurvey.time);
-    s.appendChild(sT);
+    let smallTime = document.createElement('small');
+    let smallTimeText = document.createTextNode("Survey Time: " + mainSurvey.time);
+    smallTime.appendChild(smallTimeText);
 
-    let r = document.createElement('small');
-    let rT = document.createTextNode("Survey ID: " + res[0].surveyID);
-    r.appendChild(rT);
+    let smallName = document.createElement('small');
+    let smallNameText = document.createTextNode("Survey ID: " + res[0].surveyID);
+    smallName.appendChild(smallNameText);
 
-    document.getElementById("title").appendChild(t);
-    document.getElementById("title").appendChild(s);
-    document.getElementById("title").appendChild(r);
+    document.getElementById("title").appendChild(heading);
+    document.getElementById("title").appendChild(smallTime);
+    document.getElementById("title").appendChild(smallName);
 }
 
+/**
+ * Fetches all results, name and survey from server
+ */
 async function loadResults() {
     const id = getSurveyId();
     // Fetch Survey Results
@@ -396,14 +514,19 @@ async function loadResults() {
     }
 }
 
+/**
+ * Adds Text for no responses to page
+ */
 function showNoResponses() {
     let heading = document.createElement('h2');
     let headingText = document.createTextNode("This survey has no responses");
     heading.appendChild(headingText);
-
     document.getElementById("title").appendChild(heading);
 }
 
+/**
+ * Adds functionality for collapsable navigation on mobile
+ */
 function navigationCollapse() {
     let x = document.getElementById("mainNav");
     if (x.className === "mainNav") {
@@ -413,8 +536,10 @@ function navigationCollapse() {
     }
 }
 
+/**
+ * Called once page is loaded
+ */
 function pageLoaded() {
     loadResults();
 }
-
 window.addEventListener('load', pageLoaded);

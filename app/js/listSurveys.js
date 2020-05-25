@@ -11,22 +11,25 @@ async function showTable() {
     let tableHead = document.createElement('thead');
     let tableBody = document.createElement('tbody');
     let tR = document.createElement('tr');
-    tR.class = 'tableHead';
+    tR.classList = 'tableHead';
     let tH1 = document.createElement('th');
-    tH1.class = 'tableColumn1'
+    tH1.classList = 'tableColumn1'
     let tH2 = document.createElement('th');
-    tH2.class = 'tableColumn2'
+    tH2.classList = 'tableColumn2'
     let tH3 = document.createElement('th');
-    tH3.class = 'tableColumn3'
+    tH3.classList = 'tableColumn3'
     let tH4 = document.createElement('th');
-    tH4.class = 'tableColumn4'
+    tH4.classList = 'tableColumn4'
     let tH5 = document.createElement('th');
-    tH5.class = 'tableColumn5'
+    tH5.classList = 'tableColumn5'
+    let tH6 = document.createElement('th');
+    tH6.classList = 'tableColumn6'
     let tH11 = document.createTextNode('Survey ID');
     let tH21 = document.createTextNode('Survey Name');
     let tH31 = document.createTextNode('Survey Link');
     let tH41 = document.createTextNode('Survey Responses');
-    let tH51 = document.createTextNode('Date');
+    let tH51 = document.createTextNode('Number of Responses');
+    let tH61 = document.createTextNode('Date');
 
     table.appendChild(tableHead);
     tableHead.appendChild(tR);
@@ -35,25 +38,29 @@ async function showTable() {
     tR.appendChild(tH3);
     tR.appendChild(tH4);
     tR.appendChild(tH5);
+    tR.appendChild(tH6);
     tH1.appendChild(tH11);
     tH2.appendChild(tH21);
     tH3.appendChild(tH31);
     tH4.appendChild(tH41);
     tH5.appendChild(tH51);
+    tH6.appendChild(tH61);
     table.appendChild(tableBody);
 
     for (let i = 0; i < surveys.length; i++) {
         let tRow = document.createElement('tr');
         let tD1 = document.createElement('td');
-        tD1.class = 'tableColumn1';
+        tD1.classList = 'tableColumn1';
         let tD2 = document.createElement('td');
-        tD2.class = 'tableColumn2';
+        tD2.classList = 'tableColumn2';
         let tD3 = document.createElement('td');
-        tD3.class = 'tableColumn3';
+        tD3.classList = 'tableColumn3';
         let tD4 = document.createElement('td');
-        tD4.class = 'tableColumn4';
+        tD4.classList = 'tableColumn4';
         let tD5 = document.createElement('td');
-        tD5.class = 'tableColumn5';
+        tD5.classList = 'tableColumn5';
+        let tD6 = document.createElement('td');
+        tD6.classList = 'tableColumn6';
         let tD11 = document.createTextNode(surveys[i].id);
         let name = await getSurveyName(surveys[i].id);
         let tD21 = document.createTextNode(name);
@@ -63,13 +70,15 @@ async function showTable() {
         let tD41 = document.createElement("a");
         let tD42 = document.createTextNode("View Responses");
         tD41.href = "results#" + surveys[i].id;
-        let tD51 = document.createTextNode(surveys[i].time);
+        let tD51 = document.createTextNode(await getSurveyResponses(surveys[i].id));
+        let tD61 = document.createTextNode(surveys[i].time);
         tableBody.appendChild(tRow);
         tRow.appendChild(tD1);
         tRow.appendChild(tD2);
         tRow.appendChild(tD3);
         tRow.appendChild(tD4);
         tRow.appendChild(tD5);
+        tRow.appendChild(tD6);
         tD1.appendChild(tD11);
         tD2.appendChild(tD21);
         tD3.appendChild(tD31);
@@ -77,6 +86,7 @@ async function showTable() {
         tD4.appendChild(tD41);
         tD41.appendChild(tD42);
         tD5.appendChild(tD51);
+        tD6.appendChild(tD61);
     }
     surveyElement.appendChild(table);
 }
@@ -93,6 +103,17 @@ async function getSurveyName(id) {
     let surveyName = survey.name;
     if (surveyName === undefined || surveyName === null) surveyName = "no survey name :-(";
     return surveyName;
+}
+
+async function getSurveyResponses(id) {
+    const response = await fetch(`results/${id}`);
+    let res;
+    if (response.ok) {
+        res = await response.json();
+    } else {
+        res = {msg: 'failed to load results :-('};
+    }
+    return res.length;
 }
 
 async function loadAllSurveys() {

@@ -1,79 +1,86 @@
 let uploadedJSON = {};
-let el = {};
 let obj;
 
+/**
+ * Gets JSON from pasteJSON form field
+ */
 document.getElementById('create').onclick = function() {
     obj = JSON.parse(document.getElementById('result').value);
-    console.log(obj);
     createFormatted(obj);
 }
 
+/**
+ * Create Formatted JSON HTML on page
+ * @param  {Array} json  JSON array of survey
+ */
 function createFormatted(json) {
     if(json == null) { console.log("no json") }
-    console.log(json);
 
-    let a = document.createElement('section');
+    // Section HTML
+    let section = document.createElement('section');
     // Show Title
-    let aTitle = document.createElement('h2');
-    let aTitleText = document.createTextNode(json.name);
-    a.appendChild(aTitle);
-    aTitle.appendChild(aTitleText);
+    let title = document.createElement('h2');
+    let titleTxt = document.createTextNode(json.name);
+    section.appendChild(title);
+    title.appendChild(titleTxt);
 
     // Show Questions
     for (let i = 0; i < json.questions.length; i++) {
-        let q = document.createElement('div');
-        q.className = 'formQuestion';
+        let questionSection = document.createElement('section');
+        questionSection.className = 'formQuestion';
 
-        let qA = document.createElement('label');
-        qA.htmlFor = json.questions[i].id;
-        let qB = document.createTextNode(obj.questions[i].text);
-        q.appendChild(qA);
-        qA.appendChild(qB);
+        let questionLabel = document.createElement('label');
+        questionLabel.htmlFor = json.questions[i].id;
+        let questionLabelText = document.createTextNode(obj.questions[i].text);
+        questionSection.appendChild(questionLabel);
+        questionLabel.appendChild(questionLabelText);
 
         if(json.questions[i].type === 'text') {
-            let fA = document.createElement('input');
-            fA.type = json.questions[i].type;
-            fA.name = json.questions[i].id;
-            fA.id = json.questions[i].id;
-            q.appendChild(fA);
+            let input = document.createElement('input');
+            input.type = json.questions[i].type;
+            input.name = json.questions[i].id;
+            input.id = json.questions[i].id;
+            questionSection.appendChild(input);
         }
         if(json.questions[i].type === 'number') {
-            let fA = document.createElement('input');
-            fA.type = json.questions[i].type;
-            fA.name = json.questions[i].id;
-            fA.id = json.questions[i].id;
-            q.appendChild(fA);
+            let input = document.createElement('input');
+            input.type = json.questions[i].type;
+            input.name = json.questions[i].id;
+            input.id = json.questions[i].id;
+            questionSection.appendChild(input);
         }
         if(json.questions[i].type === 'single-select') {
-            let fA = document.createElement('select');
-            fA.id = json.questions[i].id;
+            let select = document.createElement('select');
+            select.id = json.questions[i].id;
 
             for (let j = 0; j < json.questions[i].options.length; j++) {
-                let fO = document.createElement('option');
-                fO.value = json.questions[i].options[j];
-                let fOa = document.createTextNode(obj.questions[i].options[j]);
-                fA.appendChild(fO);
-                fO.appendChild(fOa);
+                let option = document.createElement('option');
+                option.value = json.questions[i].options[j];
+                let optionText = document.createTextNode(obj.questions[i].options[j]);
+                select.appendChild(option);
+                option.appendChild(optionText);
             }
-            q.appendChild(fA);
+            questionSection.appendChild(select);
         }
         if(json.questions[i].type === 'multi-select') {
-            let fA = document.createElement('select');
-            fA.id = json.questions[i].id;
-            fA.multiple = true;
+            let select = document.createElement('select');
+            select.id = json.questions[i].id;
+            select.multiple = true;
 
             for (let j = 0; j < json.questions[i].options.length; j++) {
-                let fO = document.createElement('option');
-                fO.value = json.questions[i].options[j];
-                let fOa = document.createTextNode(obj.questions[i].options[j]);
-                fA.appendChild(fO);
-                fO.appendChild(fOa);
+                let option = document.createElement('option');
+                option.value = json.questions[i].options[j];
+                let optionText = document.createTextNode(obj.questions[i].options[j]);
+                select.appendChild(option);
+                option.appendChild(optionText);
             }
-            q.appendChild(fA);
+            questionSection.appendChild(select);
         }
 
-        a.appendChild(q);
+        section.appendChild(questionSection);
     }
+
+    //  Create Submit Button
     let submitButton = document.createElement('button');
     submitButton.id = 'submitSurvey';
     submitButton.className = 'buttonPrimary';
@@ -83,6 +90,7 @@ function createFormatted(json) {
     submitButton.addEventListener('click', submitButtonClick);
     document.getElementById("jsonForm").appendChild(a);
 }
+
 
 document.getElementById('import').onclick = function() {
     let files = document.getElementById('upJSON').files;
