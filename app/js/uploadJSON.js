@@ -16,8 +16,17 @@ document.getElementById('create').onclick = function() {
 function createFormatted(json) {
     if(json == null) { console.log("no json") }
 
+    // Clear existing form if there is one
+    let existingSection = document.getElementById("exampleQuestionnaire");
+    if(typeof (existingSection) !== undefined && existingSection !== null) {
+        let existingSubmitButton = document.getElementById("submitSurvey");
+        existingSection.parentNode.removeChild(existingSection);
+        existingSubmitButton.parentNode.removeChild(existingSubmitButton);
+    }
+
     // Section HTML
     let section = document.createElement('section');
+    section.id = 'exampleQuestionnaire';
     // Show Title
     let title = document.createElement('h2');
     let titleTxt = document.createTextNode(json.name);

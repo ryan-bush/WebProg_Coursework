@@ -95,7 +95,7 @@
   -moz-appearance: none;
   margin-bottom: 10px;
   font-size: 16px;
-  width: 10%;
+  width: 20%;
 }
 
 .paginate:hover, .paginate:focus {
@@ -447,21 +447,27 @@ select {
   }
   .surveyTable table tbody tr td:nth-child(1):before {
     content: "ID";
+    margin-left: -20px;
   }
   .surveyTable table tbody tr td:nth-child(2):before {
     content: "Name";
+    margin-left: -20px;
   }
   .surveyTable table tbody tr td:nth-child(3):before {
     content: "Link";
+    margin-left: -20px;
   }
   .surveyTable table tbody tr td:nth-child(4):before {
     content: " ";
+    margin-left: -20px;
   }
   .surveyTable table tbody tr td:nth-child(5):before {
     content: "Responses";
+    margin-left: -20px;
   }
   .surveyTable table tbody tr td:nth-child(6):before {
     content: "Date";
+    margin-left: -20px;
   }
   .surveyTable .tableColumn4,
 .surveyTable .tableColumn5,
@@ -494,7 +500,7 @@ body {
 }
 
 h1 {
-  text-align: center;
+  font-size: 28px;
 }
 
 #container {

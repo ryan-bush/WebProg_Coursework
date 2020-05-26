@@ -461,7 +461,7 @@ function mergeResults(res) {
  * @param  {String} resName     The Survey name
  */
 function addTitle(res, resName) {
-    let heading = document.createElement('h2');
+    let heading = document.createElement('h1');
     let headingText = document.createTextNode(resName);
     heading.appendChild(headingText);
 

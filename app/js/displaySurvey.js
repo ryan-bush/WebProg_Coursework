@@ -61,7 +61,9 @@ function createSurvey(json) {
         }
         if(json.questions[i].type === 'number') {
             let input = document.createElement('input');
-            input.type = json.questions[i].type;
+            console.log(json.questions[i].type);
+            input.type = 'tel';
+            input.pattern = '[0-9]';
             input.name = json.questions[i].id;
             input.id = json.questions[i].id;
             section.appendChild(input);

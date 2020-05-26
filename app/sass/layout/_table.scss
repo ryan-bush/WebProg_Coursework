@@ -129,21 +129,27 @@
     }
     table tbody tr td:nth-child(1):before {
       content: "ID";
+      margin-left: -20px;
     }
     table tbody tr td:nth-child(2):before {
       content: "Name";
+      margin-left: -20px;
     }
     table tbody tr td:nth-child(3):before {
       content: "Link";
+      margin-left: -20px;
     }
     table tbody tr td:nth-child(4):before {
       content: " ";
+      margin-left: -20px;
     }
     table tbody tr td:nth-child(5):before {
       content: "Responses";
+      margin-left: -20px;
     }
     table tbody tr td:nth-child(6):before {
       content: "Date";
+      margin-left: -20px;
     }
 
     .tableColumn4,
