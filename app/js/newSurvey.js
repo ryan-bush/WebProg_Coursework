@@ -6,34 +6,55 @@ let surveyJSON = {name: "", questions: []};
  */
 const handleSubmit = event => {
     event.preventDefault();
-    let surveyName = document.getElementById('surveyName');
-    surveyJSON.name = surveyName.value;
-    for (let i = 0; i < qID; i++) {
-        let questionName = document.getElementById('questionName' + i);
-        let questionQues = document.getElementById('questionQues' + i);
-        let questionType = document.getElementById('questionType' + i);
+    let password = document.getElementById('inputPassword').value;
+    let name = document.getElementById('surveyName').value;
+    if(name !== undefined && name !== null && name.length >= 1) {
+        if(password !== undefined && password !== null && password.length >= 1) {
+            let surveyName = document.getElementById('surveyName');
+            surveyJSON.name = surveyName.value;
+            for (let i = 0; i < qID; i++) {
+                let questionName = document.getElementById('questionName' + i);
+                let questionQues = document.getElementById('questionQues' + i);
+                let questionType = document.getElementById('questionType' + i);
 
-        if (questionType.value === 'single-select' ||  questionType.value === 'multi-select') {
-            let optionCount = document.getElementById('questionOptions' + i).childElementCount;
-            let options = [];
-            for (let j = 0; j < optionCount; j++) {
-                if (isEven(j)){
-                    let option = document.getElementById('question' + i + 'Option' +  j);
-                    if(option.value == null) { continue; }
-                    options.push(option.value);
+                if (questionType.value === 'single-select' ||  questionType.value === 'multi-select') {
+                    let optionCount = document.getElementById('questionOptions' + i).childElementCount;
+                    let options = [];
+                    for (let j = 0; j < optionCount; j++) {
+                        if (isEven(j)){
+                            let option = document.getElementById('question' + i + 'Option' +  j);
+                            if(option.value == null) { continue; }
+                            options.push(option.value);
+                        }
+                    }
+                    let a = { id: questionName.value, text: questionQues.value, type: questionType.value, options: options}
+                    surveyJSON.questions.push(a);
+                } else {
+                    let a = { id: questionName.value, text: questionQues.value, type: questionType.value }
+                    surveyJSON.questions.push(a);
                 }
             }
-            let a = { id: questionName.value, text: questionQues.value, type: questionType.value, options: options}
-            surveyJSON.questions.push(a);
+            let result = document.getElementById('results');
+            let text = document.createTextNode("Survey created. Please either download the JSON or submit the survey to be created.");
+            result.appendChild(text);
+            showLinks();
         } else {
-            let a = { id: questionName.value, text: questionQues.value, type: questionType.value }
-            surveyJSON.questions.push(a);
+            let passwordError = document.createElement('p');
+            let passwordErrorText = document.createTextNode('You must enter a password');
+            let passwordSection = document.getElementById('password');
+            passwordError.classList = 'errorText';
+            passwordSection.appendChild(passwordError);
+            passwordError.appendChild(passwordErrorText);
         }
+    } else {
+        let nameError = document.createElement('p');
+        let nameErrorText = document.createTextNode('You must enter a survey name');
+        let nameSection = document.getElementById('name');
+        nameError.classList = 'errorText';
+        nameSection.appendChild(nameError);
+        nameError.appendChild(nameErrorText);
     }
-    let result = document.getElementById('results');
-    let text = document.createTextNode("Survey created. Please either download the JSON or submit the survey to be created.");
-    result.appendChild(text);
-    showLinks();
+
 };
 
 /**

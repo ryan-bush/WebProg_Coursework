@@ -81,6 +81,9 @@ function showResults(res, resName, resSurvey) {
     showResponses();
 }
 
+/**
+ * Adds password  input to page
+ */
 function addManageSection() {
     let manageSection = document.getElementById('manage');
     let passwordLabel = document.createElement('label');
@@ -103,6 +106,9 @@ function addManageSection() {
 
 }
 
+/**
+ * Retrieves password from server and checks agains entered password
+ */
 async function checkPassword() {
     let password = document.getElementById('surveyPassword').value;
     let manageSection = document.getElementById('manage');
@@ -127,6 +133,9 @@ async function checkPassword() {
     }
 }
 
+/**
+ * Display open/close survey buttons
+ */
 function passwordCorrect() {
     let manageSection = document.getElementById('manage');
 
@@ -149,6 +158,9 @@ function passwordCorrect() {
     }
 }
 
+/**
+ * Sends a request tot he server to close the server
+ */
 async function closeSurvey() {
     const id = getSurveyId();
     const response = await fetch(`close/${id}`);
@@ -161,6 +173,9 @@ async function closeSurvey() {
     toggleButton(0);
 }
 
+/**
+ * Sends a request to the server to open the survey
+ */
 async function openSurvey() {
     const id = getSurveyId();
     const response = await fetch(`open/${id}`);
@@ -173,6 +188,10 @@ async function openSurvey() {
     toggleButton(1);
 }
 
+/**
+ * Toggles the state of the open/close survey button
+ * @param  {Integer} open  0 = closed survey, 1 = open survey
+ */
 function toggleButton(open) {
     let manageSection = document.getElementById('manage');
     manageSection.innerHTML = "";

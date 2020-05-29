@@ -91,7 +91,7 @@ function createFormatted(json) {
     // Create password section
     let passwordSection = document.getElementById('password');
     let passwordLabel = document.createElement('label');
-    let passwordLabelText = document.createTextNode('If you wish to password protect your survey, enter a password below.');
+    let passwordLabelText = document.createTextNode('Please enter a password to manage your survey.');
     let passwordTextBox = document.createElement('input');
     passwordSection.appendChild(passwordLabel);
     passwordLabel.appendChild(passwordLabelText);
@@ -104,7 +104,7 @@ function createFormatted(json) {
     submitButton.id = 'submitSurvey';
     submitButton.className = 'buttonPrimary';
     let submitButtonText = document.createTextNode('Create Survey');
-    document.getElementById("form").appendChild(submitButton);
+    document.getElementById("share").appendChild(submitButton);
     submitButton.appendChild(submitButtonText);
     submitButton.addEventListener('click', sendSurvey);
     document.getElementById("jsonForm").appendChild(section);
@@ -134,7 +134,7 @@ document.getElementById('import').onclick = function() {
  */
 async function sendSurvey() {
     let password = document.getElementById('inputPassword').value;
-    if(password !== undefined && password !== null) {
+    if(password !== undefined && password !== null && password.length >= 1) {
         const response = await fetch('surveys', {
             method: 'POST',
             headers: {
@@ -160,6 +160,10 @@ async function sendSurvey() {
     }
 }
 
+/**
+ * Sends a request to the server to add the password
+ * @param  {String} id  The ID of the question
+ */
 async function addPassword(id) {
     const password = document.getElementById('inputPassword').value;
     if (password !== null && password !== undefined) {
@@ -177,9 +181,13 @@ async function addPassword(id) {
         } else {
             resPass = {msg: 'failed to add password :-('};
         }
-        console.log(resPass);
     } else {
-        console.log(0);
+        let passwordError = document.createElement('p');
+        let passwordErrorText = document.createTextNode('You must enter a password');
+        let passwordSection = document.getElementById('password');
+        passwordError.classList = 'errorText';
+        passwordSection.appendChild(passwordError);
+        passwordError.appendChild(passwordErrorText);
     }
 }
 
@@ -195,12 +203,12 @@ function createShareLink(id) {
     section.appendChild(title);
     title.appendChild(titleText);
 
-    // let input = document.createElement('input');
-    // input.type = 'text';
-    // input.name = 'share';
-    // input.id = 'share';
-    // input.value = "localhost:8080/survey#" + JSON.parse(id);
-    // section.appendChild(input);
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'share';
+    input.id = 'share';
+    input.value = window.location.host + "/survey#" + JSON.parse(id);
+    section.appendChild(input);
 
     let link = document.createElement('a');
     link.id = 'viewSurvey';

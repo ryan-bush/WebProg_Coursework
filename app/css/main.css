@@ -526,4 +526,8 @@ pre {
   border: 1px solid #bbb;
 }
 
+.errorText {
+  color: #980000;
+}
+
 /*# sourceMappingURL=main.css.map */
