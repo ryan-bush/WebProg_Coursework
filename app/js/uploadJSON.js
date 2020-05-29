@@ -88,6 +88,16 @@ function createFormatted(json) {
 
         section.appendChild(questionSection);
     }
+    // Create password section
+    let passwordSection = document.getElementById('password');
+    let passwordLabel = document.createElement('label');
+    let passwordLabelText = document.createTextNode('If you wish to password protect your survey, enter a password below.');
+    let passwordTextBox = document.createElement('input');
+    passwordSection.appendChild(passwordLabel);
+    passwordLabel.appendChild(passwordLabelText);
+    passwordTextBox.id = 'inputPassword';
+    passwordTextBox.type = 'password';
+    passwordSection.appendChild(passwordTextBox);
 
     //  Create Submit Button
     let submitButton = document.createElement('button');
@@ -123,19 +133,53 @@ document.getElementById('import').onclick = function() {
  * @param  {Array} json  JSON array of survey
  */
 async function sendSurvey() {
-    const response = await fetch('surveys', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(obj),
-    });
+    let password = document.getElementById('inputPassword').value;
+    if(password !== undefined && password !== null) {
+        const response = await fetch('surveys', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj),
+        });
 
-    if (response.ok) {
-        const id = await response.json();
-        createShareLink(id);
+        if (response.ok) {
+            const id = await response.json();
+            addPassword(id);
+            createShareLink(id);
+        } else {
+            console.log('failed to send message', response);
+        }
     } else {
-        console.log('failed to send message', response);
+        let passwordError = document.createElement('p');
+        let passwordErrorText = document.createTextNode('You must enter a password');
+        let passwordSection = document.getElementById('password');
+        passwordError.classList = 'errorText';
+        passwordSection.appendChild(passwordError);
+        passwordError.appendChild(passwordErrorText);
+    }
+}
+
+async function addPassword(id) {
+    const password = document.getElementById('inputPassword').value;
+    if (password !== null && password !== undefined) {
+        const passUpload = {id: id, password: password};
+        const responsePass = await fetch('password/${id}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(passUpload),
+        });
+        let resPass;
+        if (responsePass.ok) {
+            resPass = await responsePass.json();
+        } else {
+            resPass = {msg: 'failed to add password :-('};
+        }
+        console.log(resPass);
+    } else {
+        console.log(0);
     }
 }
 

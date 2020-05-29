@@ -74,10 +74,126 @@ function showResults(res, resName, resSurvey) {
     mainSurveyQuestions = JSON.parse(resSurvey.json);
     mainSurveyQuestions = mainSurveyQuestions.questions;
     addTitle(res, resName);
+    addManageSection();
     mergeResults(res);
     orderResults(responses);
     createDownloadLink();
     showResponses();
+}
+
+function addManageSection() {
+    let manageSection = document.getElementById('manage');
+    let passwordLabel = document.createElement('label');
+    let passwordLabelText = document.createTextNode('Enter survey password to manage this survey');
+    let passwordInput = document.createElement('input');
+    passwordInput.type = 'password';
+    passwordInput.id = 'surveyPassword';
+
+    manageSection.appendChild(passwordLabel);
+    passwordLabel.appendChild(passwordLabelText);
+    manageSection.appendChild(passwordInput);
+
+    let passwordSubmitButton = document.createElement('button');
+    passwordSubmitButton.id = 'submitPassword';
+    passwordSubmitButton.classList = 'buttonPrimary';
+    let passwordSubmitButtonText = document.createTextNode('Submit');
+    manageSection.appendChild(passwordSubmitButton);
+    passwordSubmitButton.appendChild(passwordSubmitButtonText);
+    passwordSubmitButton.addEventListener("click", function(){ checkPassword(); });
+
+}
+
+async function checkPassword() {
+    let password = document.getElementById('surveyPassword').value;
+    let manageSection = document.getElementById('manage');
+
+    const id = getSurveyId();
+    const response = await fetch(`passwords/${id}`);
+    let pass;
+    if (response.ok) {
+        pass = await response.json();
+    } else {
+        pass = {msg: 'failed to load password :-('};
+    }
+    if (password === pass.password) {
+        manageSection.innerHTML = "";
+        passwordCorrect();
+    } else {
+        let passwordError = document.createElement('p');
+        let passwordErrorText = document.createTextNode('Password entered is incorrect.');
+        passwordError.classList = 'errorText';
+        manageSection.appendChild(passwordError);
+        passwordError.appendChild(passwordErrorText);
+    }
+}
+
+function passwordCorrect() {
+    let manageSection = document.getElementById('manage');
+
+    if (mainSurvey.open === 1) {
+        let closeButton = document.createElement('button');
+        let closeButtonText = document.createTextNode('Close Survey');
+        closeButton.id = 'closeButton';
+        closeButton.classList = 'buttonRed';
+        manageSection.appendChild(closeButton);
+        closeButton.appendChild(closeButtonText);
+        closeButton.addEventListener("click", function(){ closeSurvey(); });
+    } else {
+        let openButton = document.createElement('button');
+        let openButtonText = document.createTextNode('Open Survey');
+        openButton.id = 'closeButton';
+        openButton.classList = 'buttonSecondary';
+        manageSection.appendChild(openButton);
+        openButton.appendChild(openButtonText);
+        openButton.addEventListener("click", function(){ openSurvey(); });
+    }
+}
+
+async function closeSurvey() {
+    const id = getSurveyId();
+    const response = await fetch(`close/${id}`);
+    let close;
+    if (response.ok) {
+        close = await response.json();
+    } else {
+        close = {msg: 'failed to close survey :-('};
+    }
+    toggleButton(0);
+}
+
+async function openSurvey() {
+    const id = getSurveyId();
+    const response = await fetch(`open/${id}`);
+    let open;
+    if (response.ok) {
+        open = await response.json();
+    } else {
+        open = {msg: 'failed to open survey :-('};
+    }
+    toggleButton(1);
+}
+
+function toggleButton(open) {
+    let manageSection = document.getElementById('manage');
+    manageSection.innerHTML = "";
+
+    if (open === 1) {
+        let closeButton = document.createElement('button');
+        let closeButtonText = document.createTextNode('Close Survey');
+        closeButton.id = 'closeButton';
+        closeButton.classList = 'buttonRed';
+        manageSection.appendChild(closeButton);
+        closeButton.appendChild(closeButtonText);
+        closeButton.addEventListener("click", function(){ closeSurvey(); });
+    } else {
+        let openButton = document.createElement('button');
+        let openButtonText = document.createTextNode('Open Survey');
+        openButton.id = 'closeButton';
+        openButton.classList = 'buttonSecondary';
+        manageSection.appendChild(openButton);
+        openButton.appendChild(openButtonText);
+        openButton.addEventListener("click", function(){ openSurvey(); });
+    }
 }
 
 /**
@@ -438,7 +554,7 @@ function orderResults(res) {
 
 /**
  * Orders the results into a sorted array
- * @param  {Array} res  The array of each response
+ * @param  {Object} res  The array of each response
  */
 function mergeResults(res) {
     for (let i = 0; i < res.length; i++) {

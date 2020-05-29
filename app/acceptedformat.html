@@ -27,7 +27,7 @@
 <section id="container">
     <section id="format">
         <h1>Accepted JSON Format</h1>
-        <h3>Example Usage</h3>
+        <h2>Example Usage</h2>
         <pre><code>
 {
   "name": "Example Questionnaire",
@@ -82,7 +82,21 @@
         <h3>Name</h3>
         <p>Name of your survey</p>
         <h3>Questions</h3>
-        <p>All of your survey questions.</p>
+        <p>All of your survey questions with the following format.</p>
+        <h4>id</h4>
+        <p>This is the unique id of the question. There must not be another question with the same id.</p>
+        <h4>text</h4>
+        <p>The question you wish to ask.</p>
+        <h4>type</h4>
+        <p>The type of question from the following:</p>
+        <ul>
+            <li>text - A question that allows any user input.</li>
+            <li>number - A question that allows any numeric.</li>
+            <li>single-select - A question that allows a single option to be selected.</li>
+            <li>multi-select - A question that allows multiple options to be selected.</li>
+        </ul>
+        <h4>options</h4>
+        <p>Only valid for single-select or multi-select questions. All the options the user can select from.</p>
     </section>
 </section>
 

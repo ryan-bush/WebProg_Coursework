@@ -119,13 +119,24 @@ async function drawList() {
         tableData6.classList = 'tableColumn6';
         let tableDataText1 = document.createTextNode(obj.id);
         let name = await getSurveyName(obj.id);
-        let tableDataText2 = document.createTextNode(name);
+        let tableDataText2, icon;
+        if (obj.open === 1) {
+            icon = document.createElement('i');
+            icon.classList = 'fas fa-lock-open-alt';
+            tableDataText2 = document.createTextNode(" " + name);
+        } else {
+            icon = document.createElement('i');
+            icon.classList = 'fas fa-lock-alt';
+            tableDataText2 = document.createTextNode(" " + name);
+        }
+
         let tableDataText3 = document.createElement("a");
         let tableDataTextNode3 = document.createTextNode("View Survey");
-        tableDataText3.href = "survey#" + surveys[i].id;
+        tableDataText3.href = "survey#" + obj.id;
         let tableDataText4 = document.createElement("a");
         let tableDataTextNode4 = document.createTextNode("View Responses");
-        tableDataText4.href = "results#" + surveys[i].id;
+        tableDataText4.href = "results#" + obj.id;
+        console.log(obj.id);
         let tableDataText5 = document.createTextNode(await getSurveyResponses(obj.id));
         let tableDataText6 = document.createTextNode(obj.time);
         tableBody.appendChild(tableBodyRow);
@@ -136,6 +147,7 @@ async function drawList() {
         tableBodyRow.appendChild(tableData5);
         tableBodyRow.appendChild(tableData6);
         tableData1.appendChild(tableDataText1);
+        tableData2.appendChild(icon);
         tableData2.appendChild(tableDataText2);
         tableData3.appendChild(tableDataText3);
         tableDataText3.appendChild(tableDataTextNode3);

@@ -8,7 +8,24 @@ let obj = {};
 function showSurvey(survey) {
     obj = JSON.parse(survey.json);
     addTitle(survey, obj);
-    createSurvey(obj);
+    // Closed Survey Check
+    console.log(survey.open);
+    if (survey.open === 0) {
+        showClosedSurvey();
+    } else {
+        createSurvey(obj);
+    }
+}
+
+/**
+ * Shows closed survey message to user
+ */
+function showClosedSurvey() {
+    let surveySection = document.getElementById('survey');
+    let heading = document.createElement('h1');
+    let headingText = document.createTextNode('Sorry, this survey has closed.');
+    surveySection.appendChild(heading);
+    heading.appendChild(headingText);
 }
 
 /**
@@ -108,22 +125,6 @@ function createSurvey(json) {
     document.getElementById("survey").appendChild(form);
     document.getElementById("survey").appendChild(submitButton);
 }
-//
-// function toJSONString( form ) {
-//     let obj = {};
-//     let elements = form.querySelectorAll("input, select, textarea");
-//     for (let i = 0; i < elements.length; ++i) {
-//         let element = elements[i];
-//         let name = element.name;
-//         let value = element.value;
-//
-//         if (name) {
-//             obj[name] = value;
-//         }
-//     }
-//
-//     return JSON.stringify(obj);
-// }
 
 /**
  * Handles the submit button click
