@@ -45,9 +45,8 @@ On the results page you can also download all the responses as a single JSON.
 
 #### Manage Surveys
 
-You can manage 
+You can manage a survey from the results page by entering the survey password. Once entered
+you can open and close the survey as you wish, or delete the survey altogether.
 
-- View all responses of all surveys
-- View charts of responses of all surveys
-- Download all responses in JSON format
-- Open and Close a survey if the survey is password protected
+
+

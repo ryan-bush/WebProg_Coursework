@@ -1,11 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const path = require('path');
-const viewFolder = "/app/";
 const port = 8080;
 const db = require('./server/database');
-const FileSaver = require('file-saver');
 
 app.use(bodyParser.json());
 app.use(
@@ -15,10 +12,20 @@ app.use(
 );
 app.use(express.static('app', { extensions: ['html']}));
 
+/**
+ * Retrieve surveys from database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function getSurveys(req, res) {
     res.json(await db.listSurveys());
 }
 
+/**
+ * Retrieve survey from database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function getSurvey(req, res) {
     const result = await db.findSurvey(req.params.id);
     if (!result) {
@@ -28,11 +35,21 @@ async function getSurvey(req, res) {
     res.json(result);
 }
 
+/**
+ * Retrieve surveys from database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function getAllSurveys(req, res) {
     const result = await db.listSurveys();
     res.json(JSON.stringify(result));
 }
 
+/**
+ * Add password to survey into database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function addPassword(req, res) {
     console.log(req.body.password);
     let id = req.body.id;
@@ -43,28 +60,61 @@ async function addPassword(req, res) {
     res.json(JSON.stringify(password));
 }
 
+/**
+ * Add Survey to database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function postSurvey(req, res) {
     const survey = await db.addSurvey(req.body);
     res.json(JSON.stringify(survey));
 }
 
+/**
+ * Add response to database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function postResult(req, res) {
     const result = await db.addResult(req.body, req.params.id);
     res.json(JSON.stringify(result));
 }
 
+/**
+ * Changes survey to open in database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function openSurvey(req, res) {
     const open = await db.openSurvey(req.params.id);
     res.json(JSON.stringify(open));
 }
 
+/**
+ * Changes survey to closed in database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function closeSurvey(req, res) {
-    console.log(1);
-    console.log(req.params.id);
     const open = await db.closeSurvey(req.params.id);
     res.json(JSON.stringify(open));
 }
 
+/**
+ * Deletes survey from database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
+async function deleteSurvey(req, res) {
+    const deleteSur = await db.deleteSurvey(req.params.id);
+    res.json(JSON.stringify(deleteSur));
+}
+
+/**
+ * Retrieves single response from database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function getResult(req, res) {
     const result = await db.getResults(req.params.id);
     if (!result) {
@@ -73,15 +123,24 @@ async function getResult(req, res) {
     res.json(result);
 }
 
+/**
+ * Retrieves password from database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function checkPassword(req, res) {
     const pass = await db.checkPassword(req.params.id);
-    console.log(pass);
     if(!pass) {
         res.status(404).send('No password for that ID.');
     }
     res.json(pass);
 }
 
+/**
+ * Retrieves name from database
+ * @param  {Object} req  Request
+ * @param  {Object} res  Response
+ */
 async function getName(req, res) {
     const result = await db.getName(req.params.id);
     if (!result) {
@@ -113,6 +172,7 @@ app.get('/results/:id', express.json(), asyncWrap(getResult));
 app.get('/name/:id', express.json(), asyncWrap(getName));
 app.get('/open/:id', express.json(), asyncWrap(openSurvey));
 app.get('/close/:id', express.json(), asyncWrap(closeSurvey));
+app.get('/delete/:id', express.json(), asyncWrap(deleteSurvey));
 
 // app.use(function(req,res){
 //     res.status(404).render('app/error/404.html');

@@ -127,6 +127,7 @@ async function checkPassword() {
     } else {
         let passwordError = document.createElement('p');
         let passwordErrorText = document.createTextNode('Password entered is incorrect.');
+        passwordError.id = 'passwordError';
         passwordError.classList = 'errorText';
         manageSection.appendChild(passwordError);
         passwordError.appendChild(passwordErrorText);
@@ -156,6 +157,25 @@ function passwordCorrect() {
         openButton.appendChild(openButtonText);
         openButton.addEventListener("click", function(){ openSurvey(); });
     }
+    let deleteButton = document.createElement('button');
+    let deleteButtonText = document.createTextNode('Delete Survey');
+    deleteButton.id = 'deleteButton';
+    deleteButton.classList = 'buttonRed';
+    manageSection.appendChild(deleteButton);
+    deleteButton.appendChild(deleteButtonText);
+    deleteButton.addEventListener("click", function(){ deleteSurvey(); })
+}
+
+async function deleteSurvey() {
+    const id = getSurveyId();
+    const response = await fetch(`delete/${id}`);
+    let deleteSurvey;
+    if (response.ok) {
+        deleteSurvey = await response.json();
+    } else {
+        deleteSurvey = {msg: 'failed to delete survey :-('};
+    }
+    console.log(deleteSurvey);
 }
 
 /**
@@ -614,9 +634,36 @@ function addTitle(res, resName) {
 }
 
 /**
+ * Shows survey not exists
+ */
+function showNonExistSurvey() {
+    let surveySection = document.getElementById('results');
+    let heading = document.createElement('h1');
+    let headingText = document.createTextNode('Sorry, this survey does not exist.');
+    surveySection.appendChild(heading);
+    heading.appendChild(headingText);
+}
+
+
+/**
+ * Load the survey from teh server
+ */
+async function loadSurvey() {
+    const id = getSurveyId();
+    const response = await fetch(`surveys/${id}`);
+    let resSurvey;
+    if (response.ok) {
+        resSurvey = await response.json();
+        loadResults(resSurvey);
+    } else {
+        showNonExistSurvey();
+    }
+}
+
+/**
  * Fetches all results, name and survey from server
  */
-async function loadResults() {
+async function loadResults(resSurvey) {
     const id = getSurveyId();
     // Fetch Survey Results
     const response = await fetch(`results/${id}`);
@@ -624,7 +671,7 @@ async function loadResults() {
     if (response.ok) {
         res = await response.json();
     } else {
-        res = { msg: 'failed to load results :-(' };
+        showNonExistSurvey();
     }
     if(res.length === 0) {
         showNoResponses();
@@ -636,14 +683,6 @@ async function loadResults() {
             resName = await responseName.json();
         } else {
             resName = { msg: 'failed to load name :-(' };
-        }
-        // Fetch Survey Name
-        const responseSurvey = await fetch(`surveys/${id}`);
-        let resSurvey;
-        if (responseSurvey.ok) {
-            resSurvey = await responseSurvey.json();
-        } else {
-            resSurvey = { msg: 'failed to load survey :-(' };
         }
         showResults(res, resName, resSurvey);
     }
@@ -675,6 +714,6 @@ function navigationCollapse() {
  * Called once page is loaded
  */
 function pageLoaded() {
-    loadResults();
+    loadSurvey();
 }
 window.addEventListener('load', pageLoaded);

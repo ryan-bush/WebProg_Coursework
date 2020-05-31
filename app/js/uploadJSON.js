@@ -1,6 +1,48 @@
 let uploadedJSON = {};
 let obj;
 
+let dropArea = document.getElementById('container');
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, preventDefaults, false)
+})
+
+function preventDefaults (e) {
+    e.preventDefault()
+    e.stopPropagation()
+}
+
+dropArea.addEventListener('drop', handleDrop, false)
+function handleDrop(e) {
+    let dt = e.dataTransfer
+    let files = dt.files
+
+    if (files.length <= 0) {
+        return false;
+    }
+    let fReader = new FileReader();
+    let formatted;
+    fReader.onload = function(e) {
+        uploadedJSON = JSON.parse(e.target.result);
+        formatted = JSON.stringify(uploadedJSON, null, 2);
+        document.getElementById('result').value = formatted;
+    };
+    fReader.readAsText(files.item(0));
+}
+
+['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, highlight, false)
+});
+['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, unhighlight, false)
+});
+function highlight(e) {
+    dropArea.classList.add('highlight')
+}
+function unhighlight(e) {
+    dropArea.classList.remove('highlight')
+}
+
 /**
  * Gets JSON from pasteJSON form field
  */
