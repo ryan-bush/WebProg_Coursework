@@ -54,7 +54,6 @@ const handleSubmit = event => {
         nameSection.appendChild(nameError);
         nameError.appendChild(nameErrorText);
     }
-
 };
 
 /**
