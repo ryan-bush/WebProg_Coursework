@@ -124,12 +124,25 @@ async function checkPassword() {
         manageSection.innerHTML = "";
         passwordCorrect();
     } else {
-        let passwordError = document.createElement('p');
-        let passwordErrorText = document.createTextNode('Password entered is incorrect.');
-        passwordError.id = 'passwordError';
-        passwordError.classList = 'errorText';
-        manageSection.appendChild(passwordError);
-        passwordError.appendChild(passwordErrorText);
+        let pE = document.getElementById('passwordError');
+        if(pE === undefined || pE === null) {
+            let passwordError = document.createElement('p');
+            let passwordErrorText = document.createTextNode('Password entered is incorrect.');
+            passwordError.id = 'passwordError';
+            passwordError.classList = 'errorText';
+            manageSection.appendChild(passwordError);
+            passwordError.appendChild(passwordErrorText);
+        } else {
+            pE.parentNode.removeChild(pE);
+            let passwordError = document.createElement('p');
+            let passwordErrorText = document.createTextNode('Password entered is incorrect.');
+            passwordError.id = 'passwordError';
+            passwordError.classList = 'errorText';
+            manageSection.appendChild(passwordError);
+            passwordError.appendChild(passwordErrorText);
+        }
+
+
     }
 }
 
@@ -138,7 +151,6 @@ async function checkPassword() {
  */
 function passwordCorrect() {
     let manageSection = document.getElementById('manage');
-
     if (mainSurvey.open === 1) {
         let closeButton = document.createElement('button');
         let closeButtonText = document.createTextNode('Close Survey');
@@ -156,6 +168,14 @@ function passwordCorrect() {
         openButton.appendChild(openButtonText);
         openButton.addEventListener("click", function(){ openSurvey(); });
     }
+    addDeleteButton();
+}
+
+/**
+ * Adds Delete Survey Button HTML
+ */
+function addDeleteButton() {
+    let manageSection = document.getElementById('manage');
     let deleteButton = document.createElement('button');
     let deleteButtonText = document.createTextNode('Delete Survey');
     deleteButton.id = 'deleteButton';
@@ -165,6 +185,9 @@ function passwordCorrect() {
     deleteButton.addEventListener("click", function(){ deleteSurvey(); })
 }
 
+/**
+ * Sends a request to the server to delete the survey
+ */
 async function deleteSurvey() {
     const id = getSurveyId();
     const response = await fetch(`delete/${id}`);
@@ -231,6 +254,7 @@ function toggleButton(open) {
         openButton.appendChild(openButtonText);
         openButton.addEventListener("click", function(){ openSurvey(); });
     }
+    addDeleteButton();
 }
 
 /**

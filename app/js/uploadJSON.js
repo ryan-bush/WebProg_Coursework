@@ -64,6 +64,8 @@ function createFormatted(json) {
         let existingSubmitButton = document.getElementById("submitSurvey");
         existingSection.parentNode.removeChild(existingSection);
         existingSubmitButton.parentNode.removeChild(existingSubmitButton);
+        let passwordSection = document.getElementById('password');
+        passwordSection.parentNode.removeChild(passwordSection);
     }
 
     // Section HTML
