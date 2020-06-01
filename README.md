@@ -1,5 +1,11 @@
 # Web Programming Coursework - UP904935
 
+## How to Run
+
+- Extract files
+- Run ```npm install```
+- Run ```npm run start```
+
 ## Key Features
 
 #### Upload JSON survey

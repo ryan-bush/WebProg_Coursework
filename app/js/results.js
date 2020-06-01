@@ -37,7 +37,6 @@ const randomColour = (numOfColours) => {
             lastNumber = random;
         }
         lastNumber = random;
-        console.log(random);
         colours.push(subtleColours[random]);
     }
     return colours;
@@ -175,7 +174,6 @@ async function deleteSurvey() {
     } else {
         deleteSurvey = {msg: 'failed to delete survey :-('};
     }
-    console.log(deleteSurvey);
 }
 
 /**

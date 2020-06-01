@@ -1,22 +1,12 @@
 {
   "name": "webprog_coursework",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Web Programming Coursework",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/ryan-bush/WebProg_Coursework.git"
-  },
-  "author": "Ryan Bush",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ryan-bush/WebProg_Coursework/issues"
-  },
-  "homepage": "https://github.com/ryan-bush/WebProg_Coursework#readme",
   "devDependencies": {},
   "dependencies": {
     "express": "^4.17.1",

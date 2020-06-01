@@ -1,18 +1,22 @@
 let surveys = {};
 
-
 // Pagination
-
 let list = [];
 let pageList = [];
 let currentPage = 1;
-let numberPerPage = 5;
+let numberPerPage = 5; // Low number allows less surveys before pagination works
 let numberOfPages = 0;
 
+/**
+ * Gets the number of paginate pages needed
+ */
 function getNumberOfPages() {
     return Math.ceil(list.length / numberPerPage);
 }
 
+/**
+ * Handles drawing of next page of pagination
+ */
 function nextPage() {
     currentPage += 1;
     let table = document.getElementById('surveyTable');
@@ -20,6 +24,9 @@ function nextPage() {
     loadList();
 }
 
+/**
+ * Handles drawing of previous page of pagination
+ */
 function previousPage() {
     currentPage -= 1;
     let table = document.getElementById('surveyTable');
@@ -27,6 +34,9 @@ function previousPage() {
     loadList();
 }
 
+/**
+ * Handles drawing of first page of pagination
+ */
 function firstPage() {
     currentPage = 1;
     let table = document.getElementById('surveyTable');
@@ -34,6 +44,9 @@ function firstPage() {
     loadList();
 }
 
+/**
+ * Handles drawing of last page of pagination
+ */
 function lastPage() {
     currentPage = numberOfPages;
     let table = document.getElementById('surveyTable');
@@ -41,17 +54,21 @@ function lastPage() {
     loadList();
 }
 
+/**
+ * Loads the list of paginated surveys
+ */
 function loadList() {
     let begin = ((currentPage - 1) * numberPerPage);
     let end = begin + numberPerPage;
-    console.log(list);
     numberOfPages = getNumberOfPages();
-    console.log(numberOfPages);
     pageList = list.slice(begin, end);
     drawList();
     check();
 }
 
+/**
+ * Creates Table with paginated surveys
+ */
 async function drawList() {
     let surveyElement = document.getElementById('surveys');
     let loading = document.createElement('p');
@@ -100,10 +117,8 @@ async function drawList() {
     tableHeading5.appendChild(tableHeadingText5);
     tableHeading6.appendChild(tableHeadingText6);
     table.appendChild(tableBody);
-    console.log("draw list");
     for (let i = 0; i < pageList.length; i++) {
         let obj = pageList[i];
-        console.log(pageList);
         let tableBodyRow = document.createElement('tr');
         let tableData1 = document.createElement('td');
         tableData1.classList = 'tableColumn1';
@@ -136,7 +151,6 @@ async function drawList() {
         let tableDataText4 = document.createElement("a");
         let tableDataTextNode4 = document.createTextNode("View Responses");
         tableDataText4.href = "results#" + obj.id;
-        console.log(obj.id);
         let tableDataText5 = document.createTextNode(await getSurveyResponses(obj.id));
         let tableDataText6 = document.createTextNode(obj.time);
         tableBody.appendChild(tableBodyRow);
@@ -160,6 +174,9 @@ async function drawList() {
     surveyElement.appendChild(table);
 }
 
+/**
+ * Checks the status of pagination buttons and enables/disables them
+ */
 function check() {
     document.getElementById("next").disabled = currentPage == numberOfPages ? true : false;
     document.getElementById("previous").disabled = currentPage == 1 ? true : false;
@@ -168,7 +185,7 @@ function check() {
 }
 
 /**
- * Stores surveys and enables creation of tableelements
+ * Stores surveys and enables creation of table elements
  */
 function showAllSurveys() {
     surveys = JSON.parse(surveys);

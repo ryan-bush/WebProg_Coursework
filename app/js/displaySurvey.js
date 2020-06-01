@@ -9,7 +9,6 @@ function showSurvey(survey) {
     obj = JSON.parse(survey.json);
     addTitle(survey, obj);
     // Closed Survey Check
-    console.log(survey.open);
     if (survey.open === 0) {
         showClosedSurvey();
     } else {
@@ -78,7 +77,6 @@ function createSurvey(json) {
         }
         if(json.questions[i].type === 'number') {
             let input = document.createElement('input');
-            console.log(json.questions[i].type);
             input.type = 'tel';
             input.pattern = '[0-9]';
             input.name = json.questions[i].id;
