@@ -51,11 +51,9 @@ async function getAllSurveys(req, res) {
  * @param  {Object} res  Response
  */
 async function addPassword(req, res) {
-    console.log(req.body.password);
     let id = req.body.id;
     id = id.replace('"','');
     id = id.replace('"','');
-    console.log(id);
     const password = await db.addPassword(req.body.password, id);
     res.json(JSON.stringify(password));
 }

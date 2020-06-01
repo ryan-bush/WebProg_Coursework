@@ -172,7 +172,10 @@ async function sendResult(data) {
     if (response.ok) {
         const id = await response.json();
     } else {
-        console.log('failed to send message', response);
+        let error = document.createElement('h1');
+        let errorText = document.createTextNode("Failed to send results");
+        error.appendChild(errorText);
+        document.getElementById("results").appendChild(error);
     }
 }
 
@@ -193,10 +196,14 @@ async function loadSurvey() {
     let survey;
     if (response.ok) {
         survey = await response.json();
+        console.log(survey);
+        showSurvey(survey);
     } else {
-        survey = { msg: 'failed to load survey :-(' };
+        let error = document.createElement('h1');
+        let errorText = document.createTextNode("This survey does not exist");
+        error.appendChild(errorText);
+        document.getElementById("title").appendChild(error);
     }
-    showSurvey(survey);
 }
 
 /**

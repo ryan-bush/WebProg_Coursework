@@ -126,7 +126,10 @@ async function sendSurvey() {
         const id = await response.json();
         createShareLink(id);
     } else {
-        console.log('failed to send message', response);
+        let error = document.createElement('h1');
+        let errorText = document.createTextNode("Failed to create survey");
+        error.appendChild(errorText);
+        document.getElementById("links").appendChild(error);
     }
 }
 
