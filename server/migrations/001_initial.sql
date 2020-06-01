@@ -6,18 +6,6 @@ CREATE TABLE Surveys (
   time DATETIME
 );
 
-INSERT INTO Surveys (id, uuid, time) VALUES
-( '1',
-  'asdfghjkl',
-  datetime('now')),
-( '2',
-  'qwertyuiop',
-  datetime('now')),
-( '3',
-  'jdvamh298fho ',
-  datetime('now'));
-
-
 -- Down
 
 DROP TABLE Surveys;
